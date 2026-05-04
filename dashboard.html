@@ -1419,7 +1419,7 @@ async function doLogin() {
 function doLogout() {
   currentUser = null;
   localStorage.removeItem('rt_token');
-  document.getElementById('dashboard').classList.remove('active');
+  document.getElementById('dashboard').style.display = 'none';
   document.getElementById('loginPage').style.display = 'flex';
 }
 
@@ -1428,11 +1428,15 @@ function doLogout() {
 // ============================================================
 function initDashboard() {
   document.getElementById('loginPage').style.display = 'none';
-  document.getElementById('dashboard').classList.add('active');
+  document.getElementById('dashboard').style.display = 'block';
   
   // Set user info
-  document.getElementById('sidebarUserName').textContent = currentUser.nama;
-  document.getElementById('sidebarUserRole').textContent = currentUser.role;
+  const nameEls = document.querySelectorAll('.sidenav-footer-title, .dropdown-user-details-name');
+  nameEls.forEach(el => el.textContent = currentUser.nama);
+  
+  const roleEls = document.querySelectorAll('.sidenav-footer-subtitle, .dropdown-user-details-email');
+  roleEls.forEach(el => el.textContent = currentUser.role);
+  
   document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   
   // Build sidebar nav
