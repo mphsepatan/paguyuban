@@ -415,20 +415,17 @@ table.data-table tr:hover td { background: rgba(0,0,0,0.02); }
 <div class="error-msg" id="loginError"></div>
 <div class="form-group">
 <label>Email</label>
-<input id="loginEmail" placeholder="pengurus@mphs.id" type="email" value="admin@mphs.id"/>
+<input id="loginEmail" placeholder="pengurus@mphs.id" type="email"/>
 </div>
 <div class="form-group">
 <label>Password</label>
-<input id="loginPassword" placeholder="••••••••" type="password" value="admin123"/>
+<input id="loginPassword" placeholder="••••••••" type="password"/>
 </div>
 <button class="btn-full" onclick="doLogin()">Masuk ke Dashboard</button>
 <p style="text-align:center;margin-top:20px;font-size:12px;color:var(--text-muted)">
 <a href="https://mphsepatan.github.io/paguyuban" style="color:var(--gold);text-decoration:none;">← Kembali ke Landing Page</a>
 </p>
-<div style="margin-top:20px;padding:14px;background:rgba(200,149,42,0.08);border-radius:10px;font-size:12px;color:var(--text-muted)">
-<strong>Demo Mode:</strong> Email: admin@mphs.id | Password: admin123<br/>
-      Role tersedia: Ketua, Sekretaris, Bendahara, Koordinator
-    </div>
+
 </div>
 </div><div id="dashboard" style="display:none;"><nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
 <!-- Sidenav Toggle Button-->
@@ -1383,20 +1380,10 @@ table.data-table tr:hover td { background: rgba(0,0,0,0.02); }
 // KONFIGURASI
 // ============================================================
 const API_URL = 'https://script.google.com/macros/s/AKfycbzCpmX4Qp6zoIjKrbG4kbW2hMhrPgg9HYfvUYy_f8PNEbYRwhId5kMt711OIqoFfGec/exec';
-const DEMO_MODE = false;
-
 // State
 let currentUser = null;
 let allData = { news: [], pengumuman: [], struktur: [], laporan: [], warga: [], ipl: [] };
 let editMode = {};
-
-// Demo users
-const DEMO_USERS = {
-  'admin@mphs.id': { nama: 'Administrator Ketua', role: 'Ketua', password: 'admin123' },
-  'sekretaris@rt.id': { nama: 'Sari Dewi', role: 'Sekretaris', password: 'pass123' },
-  'bendahara@rt.id': { nama: 'Hendra', role: 'Bendahara', password: 'pass123' },
-  'koordinator@rt.id': { nama: 'Rudi', role: 'Koordinator', password: 'pass123' },
-};
 
 // ============================================================
 // LOGIN / LOGOUT
@@ -1408,18 +1395,12 @@ async function doLogin() {
   
   if (!email || !password) { showError('Email dan password wajib diisi'); return; }
   
-  if (DEMO_MODE) {
-    const u = DEMO_USERS[email];
-    if (!u || u.password !== password) { showError('Email atau password salah'); return; }
-    currentUser = { email, nama: u.nama, role: u.role };
-  } else {
-    try {
-      const res = await postAPI({ action: 'login', email, password });
-      if (res.status !== 'success') { showError(res.message); return; }
-      currentUser = res.user;
-      localStorage.setItem('rt_token', res.token);
-    } catch(e) { showError('Gagal terhubung ke server'); return; }
-  }
+  try {
+    const res = await postAPI({ action: 'login', email, password });
+    if (res.status !== 'success') { showError(res.message || 'Login gagal'); return; }
+    currentUser = res.user;
+    localStorage.setItem('rt_token', res.token);
+  } catch(e) { showError('Gagal terhubung ke server'); return; }
   
   errEl.classList.remove('show');
   initDashboard();
