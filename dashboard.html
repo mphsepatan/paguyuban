@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -1380,6 +1379,7 @@ table.data-table tr:hover td { background: rgba(0,0,0,0.02); }
 // KONFIGURASI
 // ============================================================
 const API_URL = 'https://script.google.com/macros/s/AKfycbzCpmX4Qp6zoIjKrbG4kbW2hMhrPgg9HYfvUYy_f8PNEbYRwhId5kMt711OIqoFfGec/exec';
+
 // State
 let currentUser = null;
 let allData = { news: [], pengumuman: [], struktur: [], laporan: [], warga: [], ipl: [] };
@@ -1484,68 +1484,30 @@ function showPage(id) {
 }
 
 // ============================================================
-// LOAD ALL DATA (DEMO)
+// LOAD ALL DATA
 // ============================================================
 async function loadAllData() {
-  if (DEMO_MODE) {
-    allData.news = [
-      { ID: '1', Judul: 'Kegiatan Gotong Royong RT', Isi: 'Kegiatan gotong royong berjalan lancar dengan antusias warga yang tinggi.', Ringkasan: 'Warga MPHS bersama-sama membersihkan lingkungan.', Kategori: 'Kegiatan', Tanggal: '2025-01-15', Author: 'Admin RT', Status: 'Publish', Gambar: '' },
-      { ID: '2', Judul: 'Rapat Koordinasi Bulanan', Isi: 'Rapat membahas pembangunan taman dan perbaikan jalan.', Ringkasan: 'Rapat bulanan membahas rencana pembangunan.', Kategori: 'Rapat', Tanggal: '2025-01-10', Author: 'Sekretaris', Status: 'Publish', Gambar: '' },
-      { ID: '3', Judul: 'Pengajian Rutin Warga', Isi: 'Pengajian rutin dihadiri lebih dari 50 warga.', Ringkasan: 'Kegiatan pengajian rutin dihadiri lebih dari 50 warga.', Kategori: 'Keagamaan', Tanggal: '2025-01-08', Author: 'Admin RT', Status: 'Draft', Gambar: '' },
-    ];
-    allData.pengumuman = [
-      { ID: '1', Judul: 'Pembayaran IPL Januari 2025', Isi: 'Segera lunasi IPL bulan Januari.', Tanggal: '2025-01-01', Author: 'Bendahara', Prioritas: 'Tinggi', Status: 'Aktif' },
-      { ID: '2', Judul: 'Jadwal Pengambilan Sampah', Isi: 'Setiap Senin, Rabu, Jumat pukul 06.00.', Tanggal: '2024-12-28', Author: 'Sekretaris', Prioritas: 'Normal', Status: 'Aktif' },
-    ];
-    allData.struktur = [
-      { ID: '1', Nama: 'Ahmad Fauzi', Jabatan: 'Ketua RT', Periode: '2023-2026', Foto: '', Urutan: 1 },
-      { ID: '2', Nama: 'Sari Dewi', Jabatan: 'Sekretaris', Periode: '2023-2026', Foto: '', Urutan: 2 },
-      { ID: '3', Nama: 'Hendra', Jabatan: 'Bendahara', Periode: '2023-2026', Foto: '', Urutan: 3 },
-      { ID: '4', Nama: 'Rudi', Jabatan: 'Koordinator Blok A', Periode: '2023-2026', Foto: '', Urutan: 4 },
-      { ID: '5', Nama: 'Tini', Jabatan: 'Koordinator Blok B', Periode: '2023-2026', Foto: '', Urutan: 5 },
-    ];
-    allData.laporan = [
-      { ID: '1', Tahun: 2025, Bulan: 1, NamaLaporan: 'Laporan Januari 2025', Pendapatan: 4500000, Pengeluaran: 2800000, Keterangan: 'IPL + Donasi' },
-      { ID: '2', Tahun: 2024, Bulan: 12, NamaLaporan: 'Laporan Desember 2024', Pendapatan: 4200000, Pengeluaran: 3100000, Keterangan: 'IPL + HUT RT' },
-    ];
-    allData.warga = [
-      { ID_KK: 'KK001', NamaKepala: 'Budi Santoso', Alamat: 'Jl. Mawar No. 5', Blok: 'A', Nomor: '5', NoHP: '081234567890', Email: 'budi@email.com', JumlahAnggota: 3, Status: 'Aktif', anggota: [
-        { ID: 'A001', ID_KK: 'KK001', Nama: 'Sari Santoso', HubunganKK: 'Istri', JenisKelamin: 'P', TanggalLahir: '1985-05-15', NIK: '3201001', Pekerjaan: 'IRT' },
-        { ID: 'A002', ID_KK: 'KK001', Nama: 'Andi Santoso', HubunganKK: 'Anak', JenisKelamin: 'L', TanggalLahir: '2010-03-20', NIK: '3201002', Pekerjaan: 'Pelajar' },
-      ]},
-      { ID_KK: 'KK002', NamaKepala: 'Dewi Rahayu', Alamat: 'Jl. Melati No. 3', Blok: 'B', Nomor: '3', NoHP: '082345678901', Email: '', JumlahAnggota: 2, Status: 'Aktif', anggota: [
-        { ID: 'A003', ID_KK: 'KK002', Nama: 'Agus Rahayu', HubunganKK: 'Suami', JenisKelamin: 'L', TanggalLahir: '1980-08-10', NIK: '3201003', Pekerjaan: 'Karyawan' },
-      ]},
-      { ID_KK: 'KK003', NamaKepala: 'Suparman', Alamat: 'Jl. Anggrek No. 12', Blok: 'A', Nomor: '12', NoHP: '083456789012', Email: '', JumlahAnggota: 4, Status: 'Aktif', anggota: [] },
-    ];
-    allData.ipl = [
-      { ID: 'I001', ID_KK: 'KK001', NamaKepala: 'Budi Santoso', Blok: 'A', Nomor: '5', Tahun: 2025, Bulan: 1, Nominal: 50000, Status: 'Lunas', TanggalBayar: '2025-01-05', Keterangan: 'Transfer' },
-      { ID: 'I002', ID_KK: 'KK002', NamaKepala: 'Dewi Rahayu', Blok: 'B', Nomor: '3', Tahun: 2025, Bulan: 1, Nominal: 50000, Status: 'Belum Bayar', TanggalBayar: '', Keterangan: '' },
-      { ID: 'I003', ID_KK: 'KK003', NamaKepala: 'Suparman', Blok: 'A', Nomor: '12', Tahun: 2025, Bulan: 1, Nominal: 50000, Status: 'Lunas', TanggalBayar: '2025-01-08', Keterangan: 'Tunai' },
-    ];
-  } else {
-    try {
-      showToast('Memuat data dari server...', 'info');
-      const responses = await Promise.all([
-        postAPI({ action: 'getNews' }),
-        postAPI({ action: 'getPengumuman' }),
-        postAPI({ action: 'getStruktur' }),
-        postAPI({ action: 'getLaporan' }),
-        postAPI({ action: 'getWarga' }),
-        postAPI({ action: 'getIPL' })
-      ]);
-      
-      const [rNews, rPengumuman, rStruktur, rLaporan, rWarga, rIPL] = responses;
-      if (rNews && rNews.status === 'success') allData.news = rNews.data || [];
-      if (rPengumuman && rPengumuman.status === 'success') allData.pengumuman = rPengumuman.data || [];
-      if (rStruktur && rStruktur.status === 'success') allData.struktur = rStruktur.data || [];
-      if (rLaporan && rLaporan.status === 'success') allData.laporan = rLaporan.data || [];
-      if (rWarga && rWarga.status === 'success') allData.warga = rWarga.data || [];
-      if (rIPL && rIPL.status === 'success') allData.ipl = rIPL.data || [];
-    } catch (e) {
-      console.error('Error loading data', e);
-      showToast('Gagal memuat beberapa data dari server', 'error');
-    }
+  try {
+    showToast('Memuat data dari server...', 'info');
+    const responses = await Promise.all([
+      postAPI({ action: 'getNews' }),
+      postAPI({ action: 'getPengumuman' }),
+      postAPI({ action: 'getStruktur' }),
+      postAPI({ action: 'getLaporan' }),
+      postAPI({ action: 'getWarga' }),
+      postAPI({ action: 'getIPL' })
+    ]);
+    
+    const [rNews, rPengumuman, rStruktur, rLaporan, rWarga, rIPL] = responses;
+    if (rNews && rNews.status === 'success') allData.news = rNews.data || [];
+    if (rPengumuman && rPengumuman.status === 'success') allData.pengumuman = rPengumuman.data || [];
+    if (rStruktur && rStruktur.status === 'success') allData.struktur = rStruktur.data || [];
+    if (rLaporan && rLaporan.status === 'success') allData.laporan = rLaporan.data || [];
+    if (rWarga && rWarga.status === 'success') allData.warga = rWarga.data || [];
+    if (rIPL && rIPL.status === 'success') allData.ipl = rIPL.data || [];
+  } catch (e) {
+    console.error('Error loading data', e);
+    showToast('Gagal memuat beberapa data dari server', 'error');
   }
   
   renderDashboard();
@@ -1689,20 +1651,6 @@ function saveNews() {
     tanggal: new Date().toISOString().split('T')[0],
   };
   
-  if (DEMO_MODE) {
-    if (editMode.news) {
-      const idx = allData.news.findIndex(n => n.ID === editMode.news);
-      if (idx >= 0) Object.assign(allData.news[idx], { Judul: data.judul, Isi: data.isi, Ringkasan: data.ringkasan, Kategori: data.kategori, Status: data.status, Gambar: data.gambar });
-    } else {
-      allData.news.unshift({ ID: genId(), Judul: data.judul, Isi: data.isi, Ringkasan: data.ringkasan, Kategori: data.kategori, Author: data.author, Tanggal: data.tanggal, Status: data.status, Gambar: data.gambar });
-    }
-    renderNewsTable(); renderDashboard();
-    closeModal('modalNews');
-    document.getElementById('modalNewsTitle').textContent = 'Tambah Berita';
-    clearNewsForm();
-    showToast(editMode.news ? 'Berita berhasil diupdate' : 'Berita berhasil disimpan', 'success');
-    return;
-  }
   postAPI(data).then(r => { showToast(r.message, r.status); if (r.status==='success') { closeModal('modalNews'); loadAllData(); }});
 }
 
@@ -1751,18 +1699,7 @@ function savePengumuman() {
   const isi = document.getElementById('annIsi').value;
   if (!judul || !isi) { showToast('Judul dan isi wajib diisi', 'error'); return; }
   
-  if (DEMO_MODE) {
-    const obj = { Judul: judul, Isi: isi, Tanggal: document.getElementById('annTanggal').value, Author: currentUser.nama, Prioritas: document.getElementById('annPrioritas').value, Status: document.getElementById('annStatus').value };
-    if (editMode.ann) {
-      const idx = allData.pengumuman.findIndex(p => p.ID === editMode.ann);
-      if (idx >= 0) Object.assign(allData.pengumuman[idx], obj);
-    } else {
-      allData.pengumuman.unshift({ ID: genId(), ...obj });
-    }
-    renderAnnTable(); closeModal('modalPengumuman');
-    showToast('Pengumuman berhasil disimpan', 'success');
-    return;
-  }
+
   const data = {
     action: editMode.ann ? 'updatePengumuman' : 'createPengumuman',
     id: editMode.ann,
@@ -1819,18 +1756,7 @@ function saveStruktur() {
   const jabatan = document.getElementById('strukturJabatan').value;
   if (!nama || !jabatan) { showToast('Nama dan jabatan wajib diisi', 'error'); return; }
   
-  if (DEMO_MODE) {
-    const obj = { Nama: nama, Jabatan: jabatan, Periode: document.getElementById('strukturPeriode').value, Foto: document.getElementById('strukturFoto').value, Urutan: Number(document.getElementById('strukturUrutan').value) };
-    if (editMode.struktur) {
-      const idx = allData.struktur.findIndex(s => s.ID === editMode.struktur);
-      if (idx >= 0) Object.assign(allData.struktur[idx], obj);
-    } else {
-      allData.struktur.push({ ID: genId(), ...obj });
-    }
-    renderStrukturTable(); closeModal('modalStruktur');
-    showToast('Data berhasil disimpan', 'success');
-    return;
-  }
+
   const data = {
     action: editMode.struktur ? 'updateStruktur' : 'createStruktur',
     id: editMode.struktur,
@@ -1895,18 +1821,7 @@ function saveLaporan() {
   const pengeluaran = document.getElementById('laporanPengeluaran').value;
   if (!tahun || !pendapatan) { showToast('Tahun dan pendapatan wajib diisi', 'error'); return; }
   
-  if (DEMO_MODE) {
-    const obj = { Tahun: Number(tahun), Bulan: Number(document.getElementById('laporanBulan').value), NamaLaporan: document.getElementById('laporanNama').value, Pendapatan: Number(pendapatan), Pengeluaran: Number(pengeluaran), Keterangan: document.getElementById('laporanKet').value };
-    if (editMode.laporan) {
-      const idx = allData.laporan.findIndex(l => l.ID === editMode.laporan);
-      if (idx >= 0) Object.assign(allData.laporan[idx], obj);
-    } else {
-      allData.laporan.unshift({ ID: genId(), ...obj });
-    }
-    renderLaporanTable(); closeModal('modalLaporan');
-    showToast('Laporan berhasil disimpan', 'success');
-    return;
-  }
+
   const data = {
     action: editMode.laporan ? 'updateLaporan' : 'createLaporan',
     id: editMode.laporan,
@@ -2045,24 +1960,7 @@ function saveWarga() {
     Pekerjaan: el.querySelector('.ang-kerja').value,
   })).filter(a => a.Nama);
   
-  if (DEMO_MODE) {
-    const obj = {
-      NamaKepala: nama, Alamat: document.getElementById('wargaAlamat').value,
-      Blok: document.getElementById('wargaBlok').value, Nomor: document.getElementById('wargaNomor').value,
-      NoHP: document.getElementById('wargaHP').value, Email: document.getElementById('wargaEmail').value,
-      Status: document.getElementById('wargaStatus').value, JumlahAnggota: anggota.length, anggota
-    };
-    if (editMode.warga) {
-      const idx = allData.warga.findIndex(w => w.ID_KK === editMode.warga);
-      if (idx >= 0) Object.assign(allData.warga[idx], obj);
-    } else {
-      allData.warga.push({ ID_KK: 'KK' + genId(), ...obj });
-    }
-    renderWargaTable(); closeModal('modalWarga');
-    showToast('Data warga berhasil disimpan', 'success');
-    document.getElementById('anggotaList').innerHTML = '';
-    return;
-  }
+
   const data = {
     action: editMode.warga ? 'updateWarga' : 'createWarga',
     id_kk: editMode.warga,
@@ -2122,22 +2020,7 @@ function submitUploadWarga() {
   if (!window._uploadWargaData) return;
   const warga = window._uploadWargaData.warga || window._uploadWargaData;
   
-  if (DEMO_MODE) {
-    let added = 0;
-    warga.forEach(kk => {
-      if (!allData.warga.find(w => w.ID_KK === kk.id_kk)) {
-        allData.warga.push({ ID_KK: kk.id_kk || genId(), NamaKepala: kk.nama_kepala, Alamat: kk.alamat||'', Blok: kk.blok||'', Nomor: kk.nomor||'', NoHP: kk.no_hp||'', Email: kk.email||'', JumlahAnggota: (kk.anggota||[]).length, Status: kk.status||'Aktif', anggota: (kk.anggota||[]).map(a => ({ ID: genId(), ID_KK: kk.id_kk, Nama: a.nama, HubunganKK: a.hubungan_kk||'', JenisKelamin: a.jenis_kelamin||'', TanggalLahir: a.tanggal_lahir||'', NIK: a.nik||'', Pekerjaan: a.pekerjaan||'' })) });
-        added++;
-      }
-    });
-    renderWargaTable();
-    showToast(`${added} KK berhasil diimport`, 'success');
-    window._uploadWargaData = null;
-    document.getElementById('uploadPreview').style.display = 'none';
-    document.getElementById('wargaFile').value = '';
-    switchTab('warga','wargaList');
-    return;
-  }
+
   const data = {
     action: 'uploadWarga',
     warga: JSON.stringify(warga)
@@ -2181,16 +2064,7 @@ function loadIPL() {
 }
 
 function bayarIPL(id) {
-  if (DEMO_MODE) {
-    const idx = allData.ipl.findIndex(i => i.ID === id);
-    if (idx >= 0) {
-      allData.ipl[idx].Status = 'Lunas';
-      allData.ipl[idx].TanggalBayar = new Date().toISOString().split('T')[0];
-    }
-    loadIPL(); renderDashboard();
-    showToast('IPL berhasil ditandai lunas', 'success');
-    return;
-  }
+
   const target = allData.ipl.find(i => i.ID === id);
   if (!target) return;
   const data = {
@@ -2217,26 +2091,7 @@ function saveIPL() {
   const opt = kkSel.options[kkSel.selectedIndex];
   if (!kkId) { showToast('Pilih kepala keluarga', 'error'); return; }
   
-  if (DEMO_MODE) {
-    const ipl = {
-      ID: genId(),
-      ID_KK: kkId,
-      NamaKepala: opt.dataset.nama,
-      Blok: opt.dataset.blok,
-      Nomor: opt.dataset.nomor,
-      Tahun: Number(document.getElementById('iplInputTahun').value),
-      Bulan: Number(document.getElementById('iplInputBulan').value),
-      Nominal: Number(document.getElementById('iplNominal').value),
-      Status: document.getElementById('iplStatusInput').value,
-      TanggalBayar: document.getElementById('iplTglBayar').value,
-      Keterangan: document.getElementById('iplKet').value,
-    };
-    allData.ipl.push(ipl);
-    loadIPL(); renderDashboard();
-    closeModal('modalIPL');
-    showToast('Pembayaran IPL berhasil dicatat', 'success');
-    return;
-  }
+
   const data = {
     action: 'inputIPL',
     id_kk: kkId,
@@ -2258,19 +2113,7 @@ function generateIPL() {
   const bulan = document.getElementById('genBulan').value;
   const nominal = document.getElementById('genNominal').value;
   
-  if (DEMO_MODE) {
-    let generated = 0;
-    allData.warga.filter(w => w.Status === 'Aktif').forEach(w => {
-      const exists = allData.ipl.find(i => i.ID_KK === w.ID_KK && String(i.Tahun) === String(tahun) && String(i.Bulan) === String(bulan));
-      if (!exists) {
-        allData.ipl.push({ ID: genId(), ID_KK: w.ID_KK, NamaKepala: w.NamaKepala, Blok: w.Blok, Nomor: w.Nomor, Tahun: Number(tahun), Bulan: Number(bulan), Nominal: Number(nominal), Status: 'Belum Bayar', TanggalBayar: '', Keterangan: '' });
-        generated++;
-      }
-    });
-    loadIPL();
-    showToast(`${generated} tagihan IPL berhasil dibuat untuk ${namaBulan[bulan]} ${tahun}`, 'success');
-    return;
-  }
+
   const data = {
     action: 'generateIPLBulanan',
     tahun: tahun,
@@ -2286,17 +2129,7 @@ function generateIPL() {
 function deleteItem(type, id) {
   if (!confirm('Yakin ingin menghapus data ini?')) return;
   
-  if (DEMO_MODE) {
-    switch(type) {
-      case 'news': allData.news = allData.news.filter(n => n.ID !== id); renderNewsTable(); renderDashboard(); break;
-      case 'pengumuman': allData.pengumuman = allData.pengumuman.filter(p => p.ID !== id); renderAnnTable(); break;
-      case 'struktur': allData.struktur = allData.struktur.filter(s => s.ID !== id); renderStrukturTable(); break;
-      case 'laporan': allData.laporan = allData.laporan.filter(l => l.ID !== id); renderLaporanTable(); break;
-      case 'warga': allData.warga = allData.warga.filter(w => w.ID_KK !== id); renderWargaTable(); break;
-    }
-    showToast('Data berhasil dihapus', 'success');
-    return;
-  }
+
   
   const typeMap = {
     'news': 'deleteNews',
@@ -2400,11 +2233,8 @@ document.getElementById('annTanggal').valueAsDate = new Date();
 
 // Check responsive
 function checkResponsive() {
-  const btn = document.getElementById('mobileMenuBtn');
-  if (window.innerWidth <= 768) btn.style.display = 'flex';
-  else { btn.style.display = 'none'; document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlayBg').classList.remove('show'); }
+  // SB Admin handles responsive behavior via its own JS
 }
 window.addEventListener('resize', checkResponsive);
-checkResponsive();
 </script></body>
 </html>
