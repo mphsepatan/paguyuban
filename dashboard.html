@@ -1378,8 +1378,8 @@ table.data-table tr:hover td { background: rgba(0,0,0,0.02); }
 // ============================================================
 // KONFIGURASI
 // ============================================================
-// const API_URL = 'https://script.google.com/macros/s/AKfycbzCpmX4Qp6zoIjKrbG4kbW2hMhrPgg9HYfvUYy_f8PNEbYRwhId5kMt711OIqoFfGec/exec';
 const API_URL = 'https://script.google.com/macros/s/AKfycbycFg87fXLxPFnGXdHHkA-Rh5647z-ASxboe7PEsf2rVDzD99ZjkLvxlW7nxcsJfHX4/exec';
+
 // State
 let currentUser = null;
 let allData = { news: [], pengumuman: [], struktur: [], laporan: [], warga: [], ipl: [] };
@@ -2155,9 +2155,10 @@ function switchTab(group, tabId) {
 
 // POST via JSONP — encode semua field sebagai query param
 // Apps Script doGet akan terima action + field lainnya
+let _jsonpCounter = 0;
 function postAPIJsonp(data) {
   return new Promise((resolve, reject) => {
-    const cbName = 'mphs_post_' + Date.now();
+    const cbName = 'mphs_post_' + Date.now() + '_' + (++_jsonpCounter);
     const url = new URL(API_URL);
     // Semua field sebagai query param (GET + JSONP)
     Object.entries(data).forEach(([k, v]) => {
