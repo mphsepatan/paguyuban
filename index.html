@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MPHS — Mutiara Puri Harmoni Sepatan | Portal Warga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f2040;
+  --navy-light: #1a3a5c;
+  --gold: #c8952a;
+  --gold-light: #e8b84b;
+  --cream: #f8f5ef;
+  --text: #1a1a2e;
+  --text-muted: #5a6480;
+  --white: #ffffff;
+  --border: rgba(200,149,42,0.2);
+  --shadow: 0 4px 24px rgba(15,32,64,0.12);
+  --shadow-lg: 0 12px 48px rgba(15,32,64,0.18);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.7;
+}
+
+/* ===== NAVBAR ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(15,32,64,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(200,149,42,0.3);
+  padding: 0 40px;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.nav-brand {
+  display: flex; align-items: center; gap: 14px;
+  text-decoration: none; color: var(--white);
+}
+
+.nav-logo {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900; font-size: 18px; color: var(--navy);
+}
+
+.nav-name h1 { font-size: 14px; font-weight: 600; letter-spacing: 0.5px; }
+.nav-name p { font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 1px; text-transform: uppercase; }
+
+.nav-links {
+  display: flex; align-items: center; gap: 32px; list-style: none;
+}
+.nav-links a {
+  color: rgba(255,255,255,0.75); text-decoration: none;
+  font-size: 13px; font-weight: 500; letter-spacing: 0.3px;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold-light); }
+
+.btn-login {
+  background: var(--gold); color: var(--navy);
+  border: none; padding: 9px 22px; border-radius: 8px;
+  font-weight: 600; font-size: 13px; cursor: pointer;
+  text-decoration: none; transition: all 0.2s;
+}
+.btn-login:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+.nav-hamburger { display: none; }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  background: var(--navy);
+  display: flex; align-items: center;
+  position: relative; overflow: hidden;
+  padding: 100px 80px 60px;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background: 
+    radial-gradient(ellipse 60% 50% at 70% 50%, rgba(200,149,42,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(26,58,92,0.8) 0%, transparent 60%);
+}
+
+.hero-pattern {
+  position: absolute; inset: 0; opacity: 0.03;
+  background-image: repeating-linear-gradient(
+    45deg, rgba(255,255,255,1) 0px, rgba(255,255,255,1) 1px, transparent 1px, transparent 40px
+  );
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 580px; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(200,149,42,0.15); border: 1px solid rgba(200,149,42,0.35);
+  color: var(--gold-light); padding: 6px 16px; border-radius: 100px;
+  font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.hero-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+.hero h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 900; line-height: 1.1;
+  color: var(--white); margin-bottom: 20px;
+}
+
+.hero h2 span { color: var(--gold-light); display: block; }
+
+.hero p {
+  color: rgba(255,255,255,0.65);
+  font-size: 17px; margin-bottom: 40px; max-width: 460px;
+}
+
+.hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+
+.btn-primary {
+  background: var(--gold); color: var(--navy);
+  padding: 14px 32px; border-radius: 10px;
+  font-weight: 700; font-size: 15px;
+  text-decoration: none; transition: all 0.2s; display: inline-block;
+}
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,149,42,0.35); }
+
+.btn-secondary {
+  background: rgba(255,255,255,0.08); color: var(--white);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 14px 32px; border-radius: 10px;
+  font-weight: 500; font-size: 15px;
+  text-decoration: none; transition: all 0.2s; display: inline-block;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.14); }
+
+.hero-stats {
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.stat-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(200,149,42,0.2);
+  border-radius: 16px; padding: 24px 28px;
+  text-align: center; min-width: 160px;
+  backdrop-filter: blur(8px);
+}
+
+.stat-card .num {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px; font-weight: 900; color: var(--gold-light);
+  line-height: 1;
+}
+.stat-card .label { color: rgba(255,255,255,0.55); font-size: 12px; margin-top: 6px; }
+
+/* ===== SECTION COMMON ===== */
+.section { padding: 80px; }
+.section.alt { background: var(--white); }
+
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-tag {
+  display: inline-block;
+  color: var(--gold); font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 700; color: var(--navy); line-height: 1.2;
+}
+.section-divider {
+  width: 60px; height: 3px; background: var(--gold);
+  border-radius: 2px; margin: 16px auto 0;
+}
+
+/* ===== BERITA ===== */
+.news-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px;
+}
+
+.news-card {
+  background: var(--white); border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden; transition: all 0.3s; cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.section.alt .news-card { background: var(--cream); }
+
+.news-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+.news-img {
+  width: 100%; height: 200px; object-fit: cover;
+  background: linear-gradient(135deg, var(--navy-light), var(--navy));
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.3); font-size: 48px;
+}
+
+.news-body { padding: 24px; }
+.news-tag {
+  display: inline-block; background: rgba(200,149,42,0.12);
+  color: var(--gold); font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 4px; margin-bottom: 12px;
+}
+
+.news-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700; color: var(--navy);
+  line-height: 1.4; margin-bottom: 10px;
+}
+.news-excerpt { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+.news-meta { display: flex; gap: 16px; font-size: 12px; color: var(--text-muted); }
+
+/* ===== PENGUMUMAN ===== */
+.announcement-list { display: flex; flex-direction: column; gap: 16px; }
+
+.announcement-item {
+  background: var(--cream); border-radius: 12px;
+  border-left: 4px solid var(--gold);
+  padding: 20px 24px; display: flex; gap: 20px;
+  align-items: flex-start; transition: all 0.2s; cursor: pointer;
+}
+.announcement-item:hover { background: var(--white); box-shadow: var(--shadow); }
+
+.announcement-item.urgent { border-left-color: #e74c3c; }
+.announcement-item.urgent .ann-icon { background: rgba(231,76,60,0.12); color: #e74c3c; }
+
+.ann-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: rgba(200,149,42,0.12); color: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+
+.ann-content h3 { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+.ann-content p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+.ann-date { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+
+/* ===== STRUKTUR ORGANISASI ===== */
+.org-tree { max-width: 900px; margin: 0 auto; }
+
+.org-level { display: flex; justify-content: center; gap: 24px; margin-bottom: 40px; }
+
+.org-card {
+  background: var(--white); border-radius: 16px;
+  border: 2px solid var(--border); padding: 24px 20px;
+  text-align: center; min-width: 160px; max-width: 200px;
+  position: relative; transition: all 0.3s;
+  box-shadow: var(--shadow);
+}
+.org-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+
+.org-card.ketua { border-color: var(--gold); background: rgba(200,149,42,0.04); }
+.org-card.ketua .org-foto { border-color: var(--gold); }
+
+.org-foto {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--navy-light); margin: 0 auto 12px;
+  border: 3px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; color: rgba(255,255,255,0.3);
+  overflow: hidden;
+}
+.org-foto img { width: 100%; height: 100%; object-fit: cover; }
+
+.org-jabatan {
+  font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 6px;
+}
+.org-nama { font-size: 14px; font-weight: 600; color: var(--navy); }
+.org-periode { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+/* ===== LAPORAN KEUANGAN ===== */
+.laporan-tabs {
+  display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap;
+}
+.tab-btn {
+  padding: 9px 20px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--white);
+  color: var(--text-muted); font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+}
+.tab-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+.tab-btn:hover:not(.active) { border-color: var(--gold); color: var(--gold); }
+
+.laporan-summary {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px; margin-bottom: 32px;
+}
+
+.summary-card {
+  background: var(--white); border-radius: 12px; padding: 20px 24px;
+  border: 1px solid var(--border);
+}
+.summary-card .label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+.summary-card .amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; font-weight: 700; margin-top: 6px;
+}
+.summary-card.income .amount { color: #27ae60; }
+.summary-card.expense .amount { color: #e74c3c; }
+.summary-card.balance .amount { color: var(--navy); }
+
+.table-laporan {
+  width: 100%; border-collapse: collapse;
+  background: var(--white); border-radius: 12px; overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.table-laporan th {
+  background: var(--navy); color: var(--white);
+  padding: 14px 20px; font-size: 12px; font-weight: 600;
+  text-align: left; letter-spacing: 0.5px;
+}
+.table-laporan td {
+  padding: 14px 20px; font-size: 14px; color: var(--text);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.table-laporan tr:hover td { background: var(--cream); }
+.badge-income { color: #27ae60; font-weight: 600; }
+.badge-expense { color: #e74c3c; font-weight: 600; }
+
+/* ===== DETAIL MODAL ===== */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(15,32,64,0.75); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal-box {
+  background: var(--white); border-radius: 20px;
+  max-width: 680px; width: 100%; max-height: 85vh;
+  overflow-y: auto; padding: 40px;
+  transform: translateY(20px); transition: transform 0.3s;
+  box-shadow: 0 24px 80px rgba(15,32,64,0.25);
+}
+.modal-overlay.open .modal-box { transform: translateY(0); }
+
+.modal-close {
+  position: absolute; top: 16px; right: 20px;
+  background: rgba(0,0,0,0.08); border: none;
+  width: 36px; height: 36px; border-radius: 50%;
+  cursor: pointer; font-size: 18px; display: flex;
+  align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.modal-close:hover { background: rgba(0,0,0,0.15); }
+
+.modal-box { position: relative; }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--navy); padding: 48px 80px;
+  border-top: 1px solid rgba(200,149,42,0.2);
+}
+
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px; margin-bottom: 40px;
+}
+
+.footer-brand p {
+  color: rgba(255,255,255,0.5); font-size: 14px; margin-top: 16px; max-width: 300px;
+}
+
+.footer-links h4 {
+  color: var(--gold-light); font-size: 12px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px;
+}
+.footer-links ul { list-style: none; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links a {
+  color: rgba(255,255,255,0.55); text-decoration: none; font-size: 14px;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--gold-light); }
+
+.footer-bottom {
+  padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-bottom p { color: rgba(255,255,255,0.35); font-size: 13px; }
+
+/* ===== LOADING ===== */
+.loading-state {
+  text-align: center; padding: 60px 20px; color: var(--text-muted);
+}
+.loading-spinner {
+  width: 36px; height: 36px; border: 3px solid var(--border);
+  border-top-color: var(--gold); border-radius: 50%;
+  animation: spin 0.8s linear infinite; margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty-state {
+  text-align: center; padding: 60px 20px; color: var(--text-muted);
+}
+.empty-state .icon { font-size: 48px; margin-bottom: 16px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .hero { padding: 100px 24px 60px; flex-direction: column; }
+  .hero-stats { position: static; transform: none; flex-direction: row; flex-wrap: wrap; justify-content: center; margin-top: 40px; }
+  .section { padding: 60px 24px; }
+  .footer-grid { grid-template-columns: 1fr; }
+  footer { padding: 48px 24px; }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.5s ease-out forwards; }
+
+.org-connector {
+  display: flex; justify-content: center; margin-bottom: -20px;
+}
+.org-connector::before {
+  content: ''; display: block; width: 2px; height: 30px;
+  background: var(--border);
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="nav-brand">
+    <div class="nav-logo">MPHS</div>
+    <div class="nav-name">
+      <h1>Mutiara Puri Harmoni Sepatan</h1>
+      <p>Portal Resmi Warga MPHS</p>
+    </div>
+  </a>
+  
+  <ul class="nav-links">
+    <li><a href="#berita">Berita</a></li>
+    <li><a href="#pengumuman">Pengumuman</a></li>
+    <li><a href="#struktur">Struktur</a></li>
+    <li><a href="#laporan">Laporan Keuangan</a></li>
+  </ul>
+  
+  <a href="dashboard.html" class="btn-login">Login Pengurus</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Portal Resmi Warga</div>
+    <h2>Selamat Datang di <span>Mutiara Puri Harmoni Sepatan</span></h2>
+    <p>Pusat informasi, pengumuman, dan laporan keuangan yang transparan untuk seluruh warga kami.</p>
+    <div class="hero-buttons">
+      <a href="#berita" class="btn-primary">Baca Berita Terbaru</a>
+      <a href="#laporan" class="btn-secondary">Laporan Keuangan</a>
+    </div>
+  </div>
+  <div class="hero-stats" id="heroStats">
+    <div class="stat-card">
+      <div class="num" id="statKK">—</div>
+      <div class="label">KK Aktif</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="statLunas">—</div>
+      <div class="label">IPL Lunas Bulan Ini</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="statNews">—</div>
+      <div class="label">Berita Diterbitkan</div>
+    </div>
+  </div>
+</section>
+
+<!-- BERITA -->
+<section class="section alt" id="berita">
+  <div class="section-header">
+    <div class="section-tag">Informasi Terkini</div>
+    <h2 class="section-title">Berita & Kegiatan</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="news-grid" id="newsGrid">
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>Memuat berita...</p>
+    </div>
+  </div>
+</section>
+
+<!-- PENGUMUMAN -->
+<section class="section" id="pengumuman">
+  <div class="section-header">
+    <div class="section-tag">Informasi Penting</div>
+    <h2 class="section-title">Pengumuman</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div style="max-width: 800px; margin: 0 auto;">
+    <div class="announcement-list" id="announcementList">
+      <div class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Memuat pengumuman...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRUKTUR ORGANISASI -->
+<section class="section alt" id="struktur">
+  <div class="section-header">
+    <div class="section-tag">Kepengurusan</div>
+    <h2 class="section-title">Struktur Organisasi</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="org-tree" id="orgTree">
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>Memuat data struktur...</p>
+    </div>
+  </div>
+</section>
+
+<!-- LAPORAN KEUANGAN -->
+<section class="section" id="laporan">
+  <div class="section-header">
+    <div class="section-tag">Transparansi</div>
+    <h2 class="section-title">Laporan Keuangan</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div id="laporanContent">
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>Memuat laporan keuangan...</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-brand" style="margin-bottom: 12px;">
+        <div class="nav-logo">MPHS</div>
+        <div class="nav-name">
+          <h1 style="color: white;">Mutiara Puri Harmoni Sepatan</h1>
+          <p>Portal Resmi Warga MPHS</p>
+        </div>
+      </a>
+      <p>Portal resmi warga Mutiara Puri Harmoni Sepatan. Menyajikan informasi, pengumuman, dan laporan keuangan yang transparan.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Navigasi</h4>
+      <ul>
+        <li><a href="#berita">Berita</a></li>
+        <li><a href="#pengumuman">Pengumuman</a></li>
+        <li><a href="#struktur">Struktur Organisasi</a></li>
+        <li><a href="#laporan">Laporan Keuangan</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Kontak</h4>
+      <ul>
+        <li><a href="#">📍 [Alamat RT]</a></li>
+        <li><a href="#">📞 [No. Ketua RT]</a></li>
+        <li><a href="#">📧 [Email RT]</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 MPHS — Mutiara Puri Harmoni Sepatan. Semua hak dilindungi.</p>
+    <p>Didukung oleh Google Apps Script</p>
+  </div>
+</footer>
+
+<!-- MODAL DETAIL BERITA -->
+<div class="modal-overlay" id="newsModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('newsModal')">✕</button>
+    <div id="newsModalContent"></div>
+  </div>
+</div>
+
+<!-- MODAL DETAIL PENGUMUMAN -->
+<div class="modal-overlay" id="annModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('annModal')">✕</button>
+    <div id="annModalContent"></div>
+  </div>
+</div>
+
+<script>
+// ======================================================
+// KONFIGURASI — Ganti dengan URL Apps Script Anda
+// ======================================================
+const API_URL = 'https://script.google.com/macros/s/AKfycbzCpmX4Qp6zoIjKrbG4kbW2hMhrPgg9HYfvUYy_f8PNEbYRwhId5kMt711OIqoFfGec/exec';
+
+// Mode DEMO — tampilkan data contoh tanpa API
+const DEMO_MODE = false;
+
+// DATA DEMO
+const DEMO_DATA = {
+  news: [
+    { ID: '1', Judul: 'Kegiatan Gotong Royong RT', Ringkasan: 'Warga MPHS bersama-sama membersihkan lingkungan sekitar pada hari Minggu pagi.', Isi: 'Kegiatan gotong royong rutin Mutiara Puri Harmoni Sepatan berlangsung dengan sangat antusias...', Tanggal: '2025-01-15', Author: 'Admin RT', Kategori: 'Kegiatan', Gambar: '' },
+    { ID: '2', Judul: 'Rapat Koordinasi Bulanan', Ringkasan: 'Rapat bulanan membahas rencana pembangunan taman dan perbaikan jalan lingkungan.', Isi: 'Rapat koordinasi bulanan Mutiara Puri Harmoni Sepatan dihadiri oleh seluruh pengurus...', Tanggal: '2025-01-10', Author: 'Sekretaris', Kategori: 'Rapat', Gambar: '' },
+    { ID: '3', Judul: 'Pengajian Rutin Warga', Ringkasan: 'Kegiatan pengajian rutin dihadiri lebih dari 50 warga yang berlangsung di balai RT.', Isi: 'Pengajian rutin warga Mutiara Puri Harmoni Sepatan berlangsung dengan khidmat...', Tanggal: '2025-01-08', Author: 'Admin RT', Kategori: 'Keagamaan', Gambar: '' },
+  ],
+  pengumuman: [
+    { ID: '1', Judul: 'Pembayaran IPL Bulan Januari 2025', Isi: 'Mohon kepada seluruh warga untuk segera melunasi iuran IPL bulan Januari paling lambat tanggal 10. Hubungi koordinator blok masing-masing.', Tanggal: '2025-01-01', Author: 'Bendahara', Prioritas: 'Tinggi' },
+    { ID: '2', Judul: 'Jadwal Pengambilan Sampah', Isi: 'Pengambilan sampah dilakukan setiap Senin, Rabu, dan Jumat pukul 06.00-08.00 WIB. Mohon sampah sudah disiapkan di depan rumah.', Tanggal: '2024-12-28', Author: 'Sekretaris', Prioritas: 'Normal' },
+    { ID: '3', Judul: 'Pos Ronda Aktif Kembali', Isi: 'Mulai 1 Februari 2025, kegiatan pos ronda wajib diikuti oleh seluruh kepala keluarga sesuai jadwal yang telah ditetapkan.', Tanggal: '2024-12-20', Author: 'Ketua RT', Prioritas: 'Normal' },
+  ],
+  struktur: [
+    { ID: '1', Nama: 'Bapak Ahmad Fauzi', Jabatan: 'Ketua RT', Periode: '2023-2026', Foto: '', Urutan: 1 },
+    { ID: '2', Nama: 'Ibu Sari Dewi', Jabatan: 'Sekretaris', Periode: '2023-2026', Foto: '', Urutan: 2 },
+    { ID: '3', Nama: 'Bapak Hendra', Jabatan: 'Bendahara', Periode: '2023-2026', Foto: '', Urutan: 3 },
+    { ID: '4', Nama: 'Bapak Rudi', Jabatan: 'Koordinator Blok A', Periode: '2023-2026', Foto: '', Urutan: 4 },
+    { ID: '5', Nama: 'Ibu Tini', Jabatan: 'Koordinator Blok B', Periode: '2023-2026', Foto: '', Urutan: 5 },
+    { ID: '6', Nama: 'Bapak Supri', Jabatan: 'Koordinator Blok C', Periode: '2023-2026', Foto: '', Urutan: 6 },
+  ],
+  laporan: [
+    { ID: '1', Tahun: 2025, Bulan: 1, NamaLaporan: 'Laporan Januari 2025', Pendapatan: 4500000, Pengeluaran: 2800000, Keterangan: 'IPL + Donasi' },
+    { ID: '2', Tahun: 2024, Bulan: 12, NamaLaporan: 'Laporan Desember 2024', Pendapatan: 4200000, Pengeluaran: 3100000, Keterangan: 'IPL + Acara HUT RT' },
+    { ID: '3', Tahun: 2024, Bulan: 11, NamaLaporan: 'Laporan November 2024', Pendapatan: 4000000, Pengeluaran: 2500000, Keterangan: 'IPL Reguler' },
+  ],
+  stats: { totalKK: 45, lunas: 38, news: 12 }
+};
+
+// ======================================================
+// FUNGSI API — pakai JSONP untuk hindari CORS Apps Script
+// ======================================================
+function fetchAPIJsonp(action, params = {}) {
+  return new Promise((resolve, reject) => {
+    // Nama callback: hanya huruf & angka, aman sebagai nama fungsi JS
+    const cbName = 'mphs_cb_' + action.replace(/[^a-z]/gi,'') + '_' + Date.now();
+
+    const url = new URL(API_URL);
+    url.searchParams.set('action', action);
+    url.searchParams.set('callback', cbName);
+    Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, String(v)));
+
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(new Error('Timeout: ' + action));
+    }, 20000);
+
+    function cleanup() {
+      clearTimeout(timer);
+      try { delete window[cbName]; } catch(e) {}
+      const el = document.getElementById('jsonp_' + cbName);
+      if (el) el.remove();
+    }
+
+    window[cbName] = function(data) { cleanup(); resolve(data); };
+
+    const script = document.createElement('script');
+    script.id = 'jsonp_' + cbName;
+    script.src = url.toString();
+    script.onerror = function() { cleanup(); reject(new Error('Script error')); };
+    document.head.appendChild(script);
+  });
+}
+
+async function fetchAPI(action, params = {}) {
+  if (DEMO_MODE) return await mockAPI(action, params);
+  try {
+    const result = await fetchAPIJsonp(action, params);
+    return result;
+  } catch(err) {
+    console.error('[MPHS API]', action, err.message);
+    return { status: 'error', message: err.message };
+  }
+}
+
+async function mockAPI(action, params) {
+  await new Promise(r => setTimeout(r, 400));
+  switch(action) {
+    case 'getNews':      return { status: 'success', data: DEMO_DATA.news };
+    case 'getPengumuman':return { status: 'success', data: DEMO_DATA.pengumuman };
+    case 'getStruktur':  return { status: 'success', data: DEMO_DATA.struktur };
+    case 'getLaporan':   return { status: 'success', data: DEMO_DATA.laporan };
+    default: return { status: 'error', message: 'Not found' };
+  }
+}
+
+// ======================================================
+// RENDER BERITA
+// ======================================================
+async function loadNews() {
+  const grid = document.getElementById('newsGrid');
+  const { status, data } = await fetchAPI('getNews');
+  
+  if (status !== 'success' || !data.length) {
+    grid.innerHTML = `<div class="empty-state"><div class="icon">📰</div><p>Belum ada berita.</p></div>`;
+    document.getElementById('statNews').textContent = '0';
+    return;
+  }
+  
+  document.getElementById('statNews').textContent = data.length + '+';
+  
+  grid.innerHTML = data.map(n => `
+    <div class="news-card fade-up" onclick="openNews(${JSON.stringify(n).replace(/"/g,'&quot;')})">
+      <div class="news-img">${n.Gambar ? `<img src="${n.Gambar}" style="width:100%;height:100%;object-fit:cover">` : '📸'}</div>
+      <div class="news-body">
+        <span class="news-tag">${n.Kategori || 'Umum'}</span>
+        <h3 class="news-title">${n.Judul}</h3>
+        <p class="news-excerpt">${n.Ringkasan || n.Isi?.substring(0,120) + '...'}</p>
+        <div class="news-meta">
+          <span>📅 ${formatDate(n.Tanggal)}</span>
+          <span>✍️ ${n.Author}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openNews(n) {
+  document.getElementById('newsModalContent').innerHTML = `
+    ${n.Gambar ? `<img src="${n.Gambar}" style="width:100%;border-radius:12px;margin-bottom:24px;">` : ''}
+    <span class="news-tag">${n.Kategori || 'Umum'}</span>
+    <h2 style="font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:var(--navy);margin:12px 0 8px;line-height:1.3">${n.Judul}</h2>
+    <div style="display:flex;gap:20px;margin-bottom:24px;color:var(--text-muted);font-size:13px;border-bottom:1px solid var(--border);padding-bottom:16px;">
+      <span>📅 ${formatDate(n.Tanggal)}</span>
+      <span>✍️ ${n.Author}</span>
+    </div>
+    <div style="font-size:15px;line-height:1.8;color:var(--text)">${(n.Isi || '').replace(/\n/g,'<br>')}</div>
+  `;
+  document.getElementById('newsModal').classList.add('open');
+}
+
+// ======================================================
+// RENDER PENGUMUMAN
+// ======================================================
+async function loadPengumuman() {
+  const list = document.getElementById('announcementList');
+  const { status, data } = await fetchAPI('getPengumuman');
+  
+  if (status !== 'success' || !data.length) {
+    list.innerHTML = `<div class="empty-state"><div class="icon">📢</div><p>Tidak ada pengumuman aktif.</p></div>`;
+    return;
+  }
+  
+  const icons = { 'Tinggi': '🔴', 'Normal': '📢', 'Rendah': '💬' };
+  
+  list.innerHTML = data.map(p => `
+    <div class="announcement-item ${p.Prioritas === 'Tinggi' ? 'urgent' : ''}" onclick="openAnn(${JSON.stringify(p).replace(/"/g,'&quot;')})">
+      <div class="ann-icon">${icons[p.Prioritas] || '📢'}</div>
+      <div class="ann-content">
+        <h3>${p.Judul}</h3>
+        <p>${p.Isi?.substring(0,150)}${p.Isi?.length > 150 ? '...' : ''}</p>
+        <div class="ann-date">📅 ${formatDate(p.Tanggal)} &nbsp;·&nbsp; ${p.Author}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openAnn(p) {
+  document.getElementById('annModalContent').innerHTML = `
+    <div style="color:var(--gold);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px">Pengumuman ${p.Prioritas === 'Tinggi' ? '🔴 PENTING' : ''}</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:800;color:var(--navy);margin-bottom:12px">${p.Judul}</h2>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)">
+      📅 ${formatDate(p.Tanggal)} &nbsp;·&nbsp; ${p.Author}
+    </div>
+    <div style="font-size:15px;line-height:1.8">${(p.Isi||'').replace(/\n/g,'<br>')}</div>
+  `;
+  document.getElementById('annModal').classList.add('open');
+}
+
+// ======================================================
+// RENDER STRUKTUR
+// ======================================================
+async function loadStruktur() {
+  const tree = document.getElementById('orgTree');
+  const { status, data } = await fetchAPI('getStruktur');
+  
+  if (status !== 'success' || !data.length) {
+    tree.innerHTML = `<div class="empty-state"><div class="icon">👥</div><p>Data struktur belum tersedia.</p></div>`;
+    return;
+  }
+  
+  const ketua = data.filter(s => s.Jabatan.toLowerCase().includes('ketua'));
+  const inti = data.filter(s => s.Jabatan.toLowerCase().match(/sekretaris|bendahara/));
+  const koord = data.filter(s => s.Jabatan.toLowerCase().includes('koordinator'));
+  const lainnya = data.filter(s => !ketua.includes(s) && !inti.includes(s) && !koord.includes(s));
+  
+  function renderCard(p, cls = '') {
+    return `
+      <div class="org-card ${cls}">
+        <div class="org-foto">${p.Foto ? `<img src="${p.Foto}" alt="${p.Nama}">` : '👤'}</div>
+        <div class="org-jabatan">${p.Jabatan}</div>
+        <div class="org-nama">${p.Nama}</div>
+        <div class="org-periode">${p.Periode}</div>
+      </div>
+    `;
+  }
+  
+  tree.innerHTML = `
+    ${ketua.length ? `
+      <div class="org-level">${ketua.map(p => renderCard(p,'ketua')).join('')}</div>
+      ${inti.length || koord.length ? '<div class="org-connector"></div>' : ''}
+    ` : ''}
+    ${inti.length ? `
+      <div class="org-level">${inti.map(p => renderCard(p)).join('')}</div>
+      ${koord.length ? '<div class="org-connector"></div>' : ''}
+    ` : ''}
+    ${koord.length ? `<div class="org-level">${koord.map(p => renderCard(p)).join('')}</div>` : ''}
+    ${lainnya.length ? `<div class="org-level">${lainnya.map(p => renderCard(p)).join('')}</div>` : ''}
+  `;
+}
+
+// ======================================================
+// RENDER LAPORAN
+// ======================================================
+let allLaporan = [];
+let activeYear = null;
+
+async function loadLaporan() {
+  const content = document.getElementById('laporanContent');
+  const { status, data } = await fetchAPI('getLaporan');
+  
+  if (status !== 'success' || !data.length) {
+    content.innerHTML = `<div class="empty-state"><div class="icon">📊</div><p>Data laporan belum tersedia.</p></div>`;
+    return;
+  }
+  
+  allLaporan = data;
+  const years = [...new Set(data.map(d => d.Tahun))].sort((a,b) => b-a);
+  activeYear = years[0];
+  
+  renderLaporan(years);
+}
+
+function renderLaporan(years) {
+  const filtered = allLaporan.filter(d => String(d.Tahun) === String(activeYear));
+  const totalPendapatan = filtered.reduce((s, d) => s + Number(d.Pendapatan), 0);
+  const totalPengeluaran = filtered.reduce((s, d) => s + Number(d.Pengeluaran), 0);
+  const saldo = totalPendapatan - totalPengeluaran;
+  
+  const namaBulan = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  
+  document.getElementById('laporanContent').innerHTML = `
+    <div class="laporan-tabs">
+      ${years.map(y => `<button class="tab-btn ${y == activeYear ? 'active' : ''}" onclick="switchYear(${y},'${JSON.stringify(years).replace(/"/g,"'")}')">${y}</button>`).join('')}
+    </div>
+    <div class="laporan-summary">
+      <div class="summary-card income">
+        <div class="label">Total Pendapatan</div>
+        <div class="amount">${formatRupiah(totalPendapatan)}</div>
+      </div>
+      <div class="summary-card expense">
+        <div class="label">Total Pengeluaran</div>
+        <div class="amount">${formatRupiah(totalPengeluaran)}</div>
+      </div>
+      <div class="summary-card balance">
+        <div class="label">Saldo Akhir</div>
+        <div class="amount">${formatRupiah(saldo)}</div>
+      </div>
+    </div>
+    <table class="table-laporan">
+      <thead>
+        <tr>
+          <th>Bulan</th>
+          <th>Keterangan</th>
+          <th>Pendapatan</th>
+          <th>Pengeluaran</th>
+          <th>Saldo</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${filtered.map(d => `
+          <tr>
+            <td><strong>${namaBulan[d.Bulan] || d.Bulan}</strong></td>
+            <td>${d.NamaLaporan} <span style="color:var(--text-muted);font-size:12px">${d.Keterangan ? '· ' + d.Keterangan : ''}</span></td>
+            <td class="badge-income">${formatRupiah(d.Pendapatan)}</td>
+            <td class="badge-expense">${formatRupiah(d.Pengeluaran)}</td>
+            <td style="font-weight:600">${formatRupiah(Number(d.Pendapatan) - Number(d.Pengeluaran))}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function switchYear(year, yearsStr) {
+  activeYear = year;
+  const years = JSON.parse(yearsStr.replace(/'/g,'"'));
+  renderLaporan(years);
+}
+
+// ======================================================
+// STATS
+// ======================================================
+async function loadStats() {
+  if (DEMO_MODE) {
+    document.getElementById('statKK').textContent = DEMO_DATA.stats.totalKK;
+    document.getElementById('statLunas').textContent = DEMO_DATA.stats.lunas;
+    return;
+  }
+  try {
+    const { status, data } = await fetchAPI('getStats');
+    if (status === 'success' && data) {
+      document.getElementById('statKK').textContent    = data.totalKK    ?? '—';
+      document.getElementById('statLunas').textContent = data.lunas       ?? '—';
+    }
+  } catch(e) {
+    // Biarkan tampil "—" jika gagal
+  }
+}
+
+// ======================================================
+// UTILS
+// ======================================================
+function formatDate(dateStr) {
+  if (!dateStr) return '-';
+  try {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+  } catch { return dateStr; }
+}
+
+function formatRupiah(num) {
+  return 'Rp ' + Number(num).toLocaleString('id-ID');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+
+// ======================================================
+// INIT
+// ======================================================
+loadStats();
+loadNews();
+loadPengumuman();
+loadStruktur();
+loadLaporan();
+</script>
+</body>
+</html>
