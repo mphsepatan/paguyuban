@@ -235,9 +235,12 @@ table.dt tr:hover td{background:rgba(0,0,0,.02)}
       <div class="sidebar-user-role" id="sbRole">—</div>
     </div>
     <nav class="sidebar-nav" id="sidebarNav"></nav>
-    <div class="sidebar-footer">
-      <button class="btn-logout" onclick="doLogout()">🚪 Keluar</button>
-    </div>
+   <div class="sidebar-footer">
+  <button class="btn-logout" onclick="doLogout()">🚪 Keluar</button>
+  <p style="margin-top:10px; font-size:12px; color:#aaa;">
+    © 2026 Ryuzel
+  </p>
+</div>
   </aside>
 
   <!-- MAIN -->
@@ -696,9 +699,28 @@ function initDashboard() {
 }
 
 function getBlokFromRole(role) {
-  // Koordinator Blok F -> return 'F', Koordinator Blok A -> return 'A', dst
-  const m = role.match(/[Kk]oordinator\s+[Bb]lok\s+([A-Za-z0-9]+)/);
+  // Koordinator Blok F  -> return 'F'  (cocok F, F1, F2, F3 ...)
+  // Koordinator Blok F6 -> return 'F6' (cocok F6 saja)
+  const m = role.match(/[Kk]oordinator\s+[Bb]lok\s+([A-Za-z0-9]+)/i);
   return m ? m[1].toUpperCase() : null;
+}
+
+// Cek apakah blok warga cocok dengan blok koordinator
+// Koordinator 'F'  -> cocok dengan 'F', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6'
+// Koordinator 'F6' -> cocok dengan 'F6' saja
+function blokMatch(wargaBlok, koordinatorBlok) {
+  if (!wargaBlok || !koordinatorBlok) return false;
+  const wb = wargaBlok.toUpperCase().trim();
+  const kb = koordinatorBlok.toUpperCase().trim();
+  // exact match dulu
+  if (wb === kb) return true;
+  // kalau koordinator blok 1 huruf (misal 'F'), cocokkan prefix
+  // F cocok dengan F, F1, F2, F3 ... tapi tidak cocok dengan FA atau FB
+  if (kb.length === 1) {
+    return wb === kb || (wb.startsWith(kb) && /^[0-9]$/.test(wb.charAt(kb.length)));
+  }
+  // kalau koordinator blok 2+ karakter (misal 'F6'), exact match saja
+  return false;
 }
 
 function isFullAdmin() {
@@ -756,7 +778,7 @@ async function loadAllData() {
     callAPI({action:'getIPL'}).then(r=>{
       if(r.status==='success'){
         // Koordinator: hanya lihat IPL bloknya
-        DB.ipl = blok ? r.data.filter(i=>i.Blok?.toUpperCase()===blok) : r.data;
+        DB.ipl = blok ? r.data.filter(i=>blokMatch(i.Blok, blok)) : r.data;
       }
     }).catch(()=>{}),
     // Semua role ambil warga (koordinator akan difilter saat render)
@@ -1116,7 +1138,7 @@ function saveWarga() {
 
 function getWargaVisible() {
   const blokRole = getBlokFromRole(currentUser.role);
-  if(blokRole) return DB.warga.filter(w=>w.Blok?.toUpperCase()===blokRole);
+  if(blokRole) return DB.warga.filter(w=>blokMatch(w.Blok, blokRole));
   return DB.warga;
 }
 
@@ -1312,7 +1334,7 @@ function populateKKSelect(blokFilter) {
   // Koordinator: filter bloknya otomatis; Admin: filter dari dropdown pilih blok
   const activeBlok = blokRole || blokFilter || '';
   const wargaList = activeBlok
-    ? DB.warga.filter(w=>w.Blok?.toUpperCase()===activeBlok.toUpperCase())
+    ? DB.warga.filter(w=>blokMatch(w.Blok, activeBlok))
     : DB.warga;
   sel.innerHTML='<option value="">— Pilih KK —</option>'+
     wargaList.map(w=>`<option value="${w.ID_KK}" data-nama="${w.NamaKepala||''}" data-blok="${w.Blok||''}" data-nomor="${w.Nomor||''}">${w.NamaKepala} — No.${w.Nomor}</option>`).join('');
