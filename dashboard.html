@@ -14,7 +14,7 @@ body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:var(--text);min-h
 .login-page{min-height:100vh;background:var(--navy);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .login-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(200,149,42,.07) 0%,transparent 70%)}
 .login-card{position:relative;z-index:1;background:var(--white);border-radius:20px;padding:48px 40px;width:420px;max-width:95vw;box-shadow:0 24px 80px rgba(0,0,0,.3)}
-.login-logo{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:22px;color:var(--navy);margin:0 auto 24px;letter-spacing:-1px}
+.login-logo{width:80px;height:80px;border-radius:16px;background:var(--cream);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;overflow:hidden;border:2px solid rgba(200,149,42,.2)}.login-logo img{width:100%;height:100%;object-fit:contain;padding:6px}
 .login-card h2{font-family:'Playfair Display',serif;text-align:center;font-size:24px;color:var(--navy);margin-bottom:4px}
 .login-card>p{text-align:center;color:var(--muted);font-size:13px;margin-bottom:28px}
 .form-group{margin-bottom:18px}
@@ -36,7 +36,7 @@ body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:var(--text);min-h
 .sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:50;transition:transform .3s}
 .sidebar-header{padding:20px;border-bottom:1px solid rgba(255,255,255,.08)}
 .sidebar-brand{display:flex;align-items:center;gap:12px}
-.sidebar-logo{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:14px;color:var(--navy);flex-shrink:0;letter-spacing:-1px}
+.sidebar-logo{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}.sidebar-logo img{width:100%;height:100%;object-fit:contain;padding:4px}
 .sidebar-name{font-size:12px;font-weight:600;color:var(--white);line-height:1.3}
 .sidebar-sub{font-size:10px;color:rgba(255,255,255,.45);margin-top:2px}
 .sidebar-user{margin:12px;padding:14px;background:rgba(255,255,255,.06);border-radius:12px}
@@ -196,7 +196,7 @@ table.dt tr:hover td{background:rgba(0,0,0,.02)}
 <div class="login-page" id="loginPage">
   <div class="login-bg"></div>
   <div class="login-card">
-    <div class="login-logo">MPHS</div>
+    <div class="login-logo"><img src="https://raw.githubusercontent.com/mphsepatan/paguyuban/refs/heads/main/assets/img/logo.png" alt="MPHS Logo"></div>
     <h2>Login Pengurus</h2>
     <p>Mutiara Puri Harmoni Sepatan</p>
     <div class="error-msg" id="loginError"></div>
@@ -223,7 +223,7 @@ table.dt tr:hover td{background:rgba(0,0,0,.02)}
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-brand">
-        <div class="sidebar-logo">MPHS</div>
+        <div class="sidebar-logo"><img src="https://raw.githubusercontent.com/mphsepatan/paguyuban/refs/heads/main/assets/img/logo.png" alt="MPHS Logo"></div>
         <div>
           <div class="sidebar-name">Mutiara Puri Harmoni</div>
           <div class="sidebar-sub">Panel Pengurus</div>
@@ -388,14 +388,7 @@ table.dt tr:hover td{background:rgba(0,0,0,.02)}
         <div class="card" style="margin-bottom:16px">
           <div class="card-header">
             <div class="filter-bar">
-         <select id="iplTahun" onchange="renderIPL()">
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-            <option value="2027">2027</option>
-            <option value="2028">2028</option>
-            <option value="2029">2029</option>
-            <option value="2030">2030</option>
-          </select>
+              <select id="iplTahun" onchange="renderIPL()"><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option></select>
               <select id="iplBulan" onchange="renderIPL()">
                 <option value="">Semua Bulan</option>
                 <option value="1">Januari</option><option value="2">Februari</option><option value="3">Maret</option>
@@ -579,7 +572,12 @@ table.dt tr:hover td{background:rgba(0,0,0,.02)}
     <div class="modal-header"><h3 id="mIPLTitle">Catat Pembayaran IPL</h3><button class="modal-close" onclick="closeModal('mIPL')">✕</button></div>
     <div class="modal-body">
       <input type="hidden" id="iId">
-      <div class="form-group"><label>Pilih KK *</label><select id="iKK"><option value="">— Pilih —</option></select></div>
+      <div class="form-group" id="iBlokGroup"><label>Pilih Blok *</label>
+        <select id="iBlok" onchange="onIPLBlokChange()">
+          <option value="">— Pilih Blok —</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Pilih KK *</label><select id="iKK"><option value="">— Pilih Blok dulu —</option></select></div>
       <div class="grid-2">
         <div class="form-group"><label>Tahun *</label><input type="number" id="iTahun" value="2025"></div>
         <div class="form-group"><label>Bulan *</label><select id="iBulan">
@@ -697,15 +695,34 @@ function initDashboard() {
   document.getElementById('aTgl').valueAsDate = new Date();
 }
 
+function getBlokFromRole(role) {
+  // Koordinator Blok F -> return 'F', Koordinator Blok A -> return 'A', dst
+  const m = role.match(/[Kk]oordinator\s+[Bb]lok\s+([A-Za-z0-9]+)/);
+  return m ? m[1].toUpperCase() : null;
+}
+
+function isFullAdmin() {
+  return ['Superadmin','Ketua','Sekretaris'].includes(currentUser.role);
+}
+
+function canAccessWarga() {
+  // Semua role bisa akses warga, koordinator hanya bloknya
+  return true;
+}
+
 function buildSidebar() {
-  const isAdmin = ['Ketua','Sekretaris','Bendahara'].includes(currentUser.role);
+  const full = isFullAdmin();
+  const isBendahara = currentUser.role === 'Bendahara';
+  const blok = getBlokFromRole(currentUser.role);
+  const isKoord = !!blok;
+
   const items = [
     {id:'dashboard', icon:'🏠', label:'Dashboard', show:true},
-    {id:'news',      icon:'📰', label:'Berita & Artikel', show:isAdmin},
-    {id:'pengumuman',icon:'📢', label:'Pengumuman', show:isAdmin},
-    {id:'struktur',  icon:'👥', label:'Struktur Organisasi', show:isAdmin},
-    {id:'laporan',   icon:'💰', label:'Laporan Keuangan', show:isAdmin},
-    {id:'warga',     icon:'🏘️', label:'Data Warga', show:isAdmin},
+    {id:'news',      icon:'📰', label:'Berita & Artikel', show:full},
+    {id:'pengumuman',icon:'📢', label:'Pengumuman', show:full},
+    {id:'struktur',  icon:'👥', label:'Struktur Organisasi', show:full},
+    {id:'laporan',   icon:'💰', label:'Laporan Keuangan', show:full||isBendahara},
+    {id:'warga',     icon:'🏘️', label:'Data Warga', show:true},
     {id:'ipl',       icon:'📊', label:'IPL / Iuran', show:true},
   ];
   document.getElementById('sidebarNav').innerHTML =
@@ -731,19 +748,35 @@ function showPage(id) {
 // LOAD ALL DATA — parallel fetch
 // ============================================================
 async function loadAllData() {
-  const role = currentUser.role;
-  const isAdmin = ['Ketua','Sekretaris','Bendahara'].includes(role);
+  const full = isFullAdmin();
+  const isBendahara = currentUser.role === 'Bendahara';
+  const blok = getBlokFromRole(currentUser.role);
 
   const fetches = [
-    callAPI({action:'getIPL'}).then(r=>{ if(r.status==='success') DB.ipl=r.data; }).catch(()=>{}),
+    callAPI({action:'getIPL'}).then(r=>{
+      if(r.status==='success'){
+        // Koordinator: hanya lihat IPL bloknya
+        DB.ipl = blok ? r.data.filter(i=>i.Blok?.toUpperCase()===blok) : r.data;
+      }
+    }).catch(()=>{}),
+    // Semua role ambil warga (koordinator akan difilter saat render)
+    callAPI({action:'getWarga'}).then(r=>{
+      if(r.status==='success'){
+        DB.warga = r.data;
+      }
+    }).catch(()=>{}),
   ];
-  if(isAdmin) {
+
+  if(full) {
     fetches.push(
       callAPI({action:'getNews'}).then(r=>{ if(r.status==='success') DB.news=r.data; }).catch(()=>{}),
       callAPI({action:'getPengumuman'}).then(r=>{ if(r.status==='success') DB.pengumuman=r.data; }).catch(()=>{}),
       callAPI({action:'getStruktur'}).then(r=>{ if(r.status==='success') DB.struktur=r.data; }).catch(()=>{}),
+    );
+  }
+  if(full || isBendahara) {
+    fetches.push(
       callAPI({action:'getLaporan'}).then(r=>{ if(r.status==='success') DB.laporan=r.data; }).catch(()=>{}),
-      callAPI({action:'getWarga'}).then(r=>{ if(r.status==='success') DB.warga=r.data; }).catch(()=>{}),
     );
   }
 
@@ -1081,13 +1114,27 @@ function saveWarga() {
   );
 }
 
+function getWargaVisible() {
+  const blokRole = getBlokFromRole(currentUser.role);
+  if(blokRole) return DB.warga.filter(w=>w.Blok?.toUpperCase()===blokRole);
+  return DB.warga;
+}
+
 function renderWarga() {
   const q=(document.getElementById('wargaSearch')?.value||'').toLowerCase();
-  const blok=document.getElementById('wargaBlok')?.value||'';
-  const bloks=[...new Set(DB.warga.map(w=>w.Blok).filter(Boolean))].sort();
+  const blokFilter=document.getElementById('wargaBlok')?.value||'';
+  const blokRole=getBlokFromRole(currentUser.role);
+
+  const baseData = getWargaVisible();
+  const bloks=[...new Set(baseData.map(w=>w.Blok).filter(Boolean))].sort();
   const sel=document.getElementById('wargaBlok');
-  if(sel){const cur=sel.value;sel.innerHTML='<option value="">Semua Blok</option>'+bloks.map(b=>`<option${b===cur?' selected':''} value="${b}">Blok ${b}</option>`).join('');}
-  const data=DB.warga.filter(w=>(!q||w.NamaKepala?.toLowerCase().includes(q)||(w.Blok||'').toLowerCase().includes(q))&&(!blok||w.Blok===blok));
+  if(sel){
+    // Koordinator: sembunyikan filter blok karena sudah otomatis
+    if(blokRole){ sel.closest('.filter-bar') && (sel.style.display='none'); }
+    else{ sel.style.display=''; const cur=sel.value; sel.innerHTML='<option value="">Semua Blok</option>'+bloks.map(b=>`<option${b===cur?' selected':''} value="${b}">Blok ${b}</option>`).join(''); }
+  }
+
+  const data=baseData.filter(w=>(!q||w.NamaKepala?.toLowerCase().includes(q)||(w.Blok||'').toLowerCase().includes(q))&&(!blokFilter||w.Blok===blokFilter));
   document.getElementById('wargaBody').innerHTML=data.length?data.map(w=>`
     <tr>
       <td style="font-size:11px;color:var(--muted)">${w.ID_KK}</td>
@@ -1138,7 +1185,34 @@ async function doUploadWarga(warga) {
 // ============================================================
 // IPL
 // ============================================================
-function openAddIPL() { resetEditMode('ipl'); document.getElementById('mIPLTitle').textContent='Catat Pembayaran IPL'; openModal('mIPL'); }
+function openAddIPL() {
+  resetEditMode('ipl');
+  document.getElementById('mIPLTitle').textContent='Catat Pembayaran IPL';
+  const blokRole = getBlokFromRole(currentUser.role);
+  const blokSel = document.getElementById('iBlok');
+  const blokGroup = document.getElementById('iBlokGroup');
+
+  // Ambil semua blok unik dari data warga
+  const bloks = [...new Set(DB.warga.map(w=>w.Blok).filter(Boolean))].sort();
+
+  if(blokRole) {
+    // Koordinator: blok sudah fixed, sembunyikan picker blok
+    blokGroup.style.display = 'none';
+    populateKKSelect(blokRole);
+  } else {
+    // Admin/Ketua: tampilkan picker blok
+    blokGroup.style.display = 'block';
+    blokSel.innerHTML = '<option value="">— Pilih Blok —</option>' +
+      bloks.map(b=>`<option value="${b}">Blok ${b}</option>`).join('');
+    populateKKSelect(''); // kosong dulu sampai blok dipilih
+  }
+  openModal('mIPL');
+}
+
+function onIPLBlokChange() {
+  const blok = document.getElementById('iBlok').value;
+  populateKKSelect(blok);
+}
 
 function bayarIPL(id) {
   const i=DB.ipl.find(x=>x.ID===id); if(!i) return;
@@ -1146,8 +1220,36 @@ function bayarIPL(id) {
   showToast('IPL ditandai lunas ✓','success');
   syncToSheets(
     {action:'updateIPL',id,status:'Lunas',tanggal_bayar:tgl,nominal:i.Nominal,keterangan:'Lunas'},
-    ()=>{ const idx=DB.ipl.findIndex(x=>x.ID===id); if(idx>=0){DB.ipl[idx].Status='Lunas';DB.ipl[idx].TanggalBayar=tgl;} }
+    ()=>{
+      const idx=DB.ipl.findIndex(x=>x.ID===id);
+      if(idx>=0){DB.ipl[idx].Status='Lunas';DB.ipl[idx].TanggalBayar=tgl;}
+      // Catat otomatis ke laporan keuangan
+      syncIPLkeLaporan(i.Tahun, i.Bulan, Number(i.Nominal), `IPL ${i.NamaKepala} Blok ${i.Blok}/${i.Nomor}`);
+    }
   );
+}
+
+// Tambah pemasukan ke laporan keuangan bulan yang sesuai
+function syncIPLkeLaporan(tahun, bulan, nominal, keterangan) {
+  // Cari laporan bulan itu, kalau ada update, kalau tidak buat baru
+  const existing = DB.laporan.find(l=>Number(l.Tahun)===Number(tahun) && Number(l.Bulan)===Number(bulan));
+  if(existing) {
+    const newPemasukan = Number(existing.Pendapatan||0) + nominal;
+    const updObj = {...existing, Pendapatan: newPemasukan};
+    syncToSheets(
+      {action:'updateLaporan',id:existing.ID,tahun:existing.Tahun,bulan:existing.Bulan,namaLaporan:existing.NamaLaporan,pendapatan:newPemasukan,pengeluaran:existing.Pengeluaran,keterangan:(existing.Keterangan?existing.Keterangan+', ':'')+keterangan},
+      ()=>{ const i=DB.laporan.findIndex(x=>x.ID===existing.ID); if(i>=0) DB.laporan[i]=updObj; }
+    );
+  } else {
+    // Buat laporan baru untuk bulan ini
+    const id=genId();
+    const nama='Laporan '+BULAN[bulan]+' '+tahun;
+    const newObj={ID:id,Tahun:Number(tahun),Bulan:Number(bulan),NamaLaporan:nama,Pendapatan:nominal,Pengeluaran:0,Keterangan:'IPL: '+keterangan};
+    syncToSheets(
+      {action:'createLaporan',id,tahun,bulan,namaLaporan:nama,pendapatan:nominal,pengeluaran:0,keterangan:'IPL: '+keterangan},
+      ()=>{ DB.laporan.unshift(newObj); }
+    );
+  }
 }
 
 function saveIPL() {
@@ -1159,7 +1261,11 @@ function saveIPL() {
   closeModal('mIPL'); showToast('Pembayaran dicatat ✓','success');
   syncToSheets(
     {action:isEdit?'updateIPL':'inputIPL',id,id_kk:kkId,nama_kepala:obj.NamaKepala,blok:obj.Blok,nomor:obj.Nomor,tahun:obj.Tahun,bulan:obj.Bulan,nominal:obj.Nominal,status:obj.Status,tanggal_bayar:obj.TanggalBayar,keterangan:obj.Keterangan},
-    ()=>{ if(isEdit){const i=DB.ipl.findIndex(x=>x.ID===id);if(i>=0)DB.ipl[i]={...DB.ipl[i],...obj};}else DB.ipl.push(obj); }
+    ()=>{
+      if(isEdit){const i=DB.ipl.findIndex(x=>x.ID===id);if(i>=0)DB.ipl[i]={...DB.ipl[i],...obj};}else DB.ipl.push(obj);
+      // Jika status Lunas, catat ke laporan keuangan
+      if(obj.Status==='Lunas') syncIPLkeLaporan(obj.Tahun, obj.Bulan, obj.Nominal, `IPL ${obj.NamaKepala} Blok ${obj.Blok}/${obj.Nomor}`);
+    }
   );
 }
 
@@ -1200,10 +1306,16 @@ function renderIPL() {
     </tr>`).join(''):'<tr><td colspan="7" class="loading-row">Tidak ada data IPL</td></tr>';
 }
 
-function populateKKSelect() {
+function populateKKSelect(blokFilter) {
   const sel=document.getElementById('iKK'); if(!sel) return;
+  const blokRole=getBlokFromRole(currentUser.role);
+  // Koordinator: filter bloknya otomatis; Admin: filter dari dropdown pilih blok
+  const activeBlok = blokRole || blokFilter || '';
+  const wargaList = activeBlok
+    ? DB.warga.filter(w=>w.Blok?.toUpperCase()===activeBlok.toUpperCase())
+    : DB.warga;
   sel.innerHTML='<option value="">— Pilih KK —</option>'+
-    DB.warga.map(w=>`<option value="${w.ID_KK}" data-nama="${w.NamaKepala}" data-blok="${w.Blok||''}" data-nomor="${w.Nomor||''}">${w.NamaKepala} (Blok ${w.Blok}/${w.Nomor})</option>`).join('');
+    wargaList.map(w=>`<option value="${w.ID_KK}" data-nama="${w.NamaKepala||''}" data-blok="${w.Blok||''}" data-nomor="${w.Nomor||''}">${w.NamaKepala} — No.${w.Nomor}</option>`).join('');
 }
 
 // ============================================================
