@@ -458,6 +458,35 @@
       margin-top: 4px;
     }
 
+    /* ======================================================
+       LAPORAN SECTION — MAIN TABS (Keuangan | IPL per Blok)
+    ====================================================== */
+    .laporan-main-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 32px;
+      background: var(--gray-100);
+      border-radius: var(--radius);
+      padding: 6px;
+      width: fit-content;
+    }
+    .main-tab-btn {
+      padding: 10px 28px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: var(--gray-600);
+    }
+    .main-tab-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
     .laporan-tabs {
       display: flex;
       gap: 8px;
@@ -506,6 +535,8 @@
     .summary-card.income .amount { color: #2563eb; }
     .summary-card.expense .amount { color: #ef4444; }
     .summary-card.balance .amount { color: var(--primary-dark); }
+    .summary-card.lunas .amount { color: #16a34a; }
+    .summary-card.tunggakan .amount { color: #dc2626; }
 
     .table-laporan {
       width: 100%;
@@ -530,6 +561,147 @@
     }
     .badge-income { color: #2563eb; font-weight: 700; }
     .badge-expense { color: #ef4444; font-weight: 700; }
+    .badge-lunas {
+      background: #dcfce7;
+      color: #16a34a;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .badge-tunggakan {
+      background: #fee2e2;
+      color: #dc2626;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    /* IPL Blok Filter Area */
+    .ipl-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+      background: white;
+      padding: 20px 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+    }
+    .ipl-filter-bar label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gray-600);
+      white-space: nowrap;
+    }
+    .ipl-select {
+      padding: 10px 16px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-800);
+      background: var(--gray-50);
+      cursor: pointer;
+      outline: none;
+      transition: 0.2s;
+      min-width: 160px;
+    }
+    .ipl-select:focus {
+      border-color: var(--accent);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+    }
+    .ipl-filter-bar .filter-period {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .ipl-filter-bar .filter-period select {
+      padding: 10px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-800);
+      background: var(--gray-50);
+      cursor: pointer;
+      outline: none;
+      transition: 0.2s;
+    }
+    .ipl-filter-bar .filter-period select:focus {
+      border-color: var(--accent);
+      background: white;
+    }
+    .btn-filter-ipl {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+    .btn-filter-ipl:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+    .ipl-blok-badge {
+      background: var(--primary);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Progress bar untuk persentase lunas */
+    .progress-wrap {
+      margin-top: 8px;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--gray-600);
+      margin-bottom: 6px;
+    }
+    .progress-bar {
+      height: 8px;
+      background: var(--gray-200);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb, #16a34a);
+      border-radius: 10px;
+      transition: width 0.8s ease;
+    }
+
+    /* IPL Detail table wrapper — scrollable on mobile */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+    }
+
+    /* Panel toggle animation */
+    .laporan-panel {
+      display: none;
+    }
+    .laporan-panel.active {
+      display: block;
+    }
 
     footer {
       background: #0b1e3c;
@@ -670,6 +842,14 @@
       .org-card {
         width: 150px;
       }
+      .laporan-main-tabs {
+        width: 100%;
+      }
+      .main-tab-btn {
+        flex: 1;
+        padding: 10px 16px;
+        font-size: 13px;
+      }
     }
   </style>
 </head>
@@ -763,16 +943,74 @@
     </div>
   </section>
 
+  <!-- ================================================
+       SEKSI LAPORAN KEUANGAN (dengan tab IPL per Blok)
+  ================================================ -->
   <section class="section" id="laporan">
     <div class="section-header">
       <div class="section-tag">Transparansi</div>
       <h2 class="section-title">Laporan Keuangan</h2>
       <div class="divider"></div>
     </div>
-    <div id="laporanContent">
-      <div class="loading-state">
-        <div class="loading-spinner"></div>
-        <p>Memuat laporan keuangan...</p>
+
+    <!-- Tab utama: Laporan Umum | IPL per Blok -->
+    <div class="laporan-main-tabs">
+      <button class="main-tab-btn active" onclick="switchMainTab('umum')">📊 Laporan Umum</button>
+      <button class="main-tab-btn" onclick="switchMainTab('ipl')">🏘️ IPL per Blok</button>
+    </div>
+
+    <!-- Panel: Laporan Umum -->
+    <div class="laporan-panel active" id="panel-umum">
+      <div id="laporanContent">
+        <div class="loading-state">
+          <div class="loading-spinner"></div>
+          <p>Memuat laporan keuangan...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: IPL per Blok -->
+    <div class="laporan-panel" id="panel-ipl">
+      <!-- Filter bar -->
+      <div class="ipl-filter-bar">
+        <label>🏘️ Pilih Blok:</label>
+        <select class="ipl-select" id="filterBlok">
+          <option value="">-- Semua Blok --</option>
+          <!-- Opsi blok akan di-generate otomatis dari data API -->
+        </select>
+
+        <div class="filter-period">
+          <label style="font-size:13px;font-weight:700;color:var(--gray-600);">📅 Periode:</label>
+          <select id="filterBulanIPL">
+            <option value="">Semua Bulan</option>
+            <option value="1">Januari</option>
+            <option value="2">Februari</option>
+            <option value="3">Maret</option>
+            <option value="4">April</option>
+            <option value="5">Mei</option>
+            <option value="6">Juni</option>
+            <option value="7">Juli</option>
+            <option value="8">Agustus</option>
+            <option value="9">September</option>
+            <option value="10">Oktober</option>
+            <option value="11">November</option>
+            <option value="12">Desember</option>
+          </select>
+          <select id="filterTahunIPL">
+            <!-- Tahun di-generate dari data -->
+          </select>
+        </div>
+
+        <button class="btn-filter-ipl" onclick="applyIPLFilter()">🔍 Tampilkan</button>
+      </div>
+
+      <!-- Hasil IPL -->
+      <div id="iplContent">
+        <div class="empty-state">
+          <div style="font-size:52px;">🏘️</div>
+          <p style="margin-top:12px;font-size:15px;font-weight:600;">Pilih blok dan periode, lalu klik <strong>Tampilkan</strong></p>
+          <p style="font-size:13px;color:var(--gray-600);">Data IPL akan ditampilkan di sini</p>
+        </div>
       </div>
     </div>
   </section>
@@ -1022,7 +1260,7 @@
     }
 
     // ======================================================
-    // RENDER LAPORAN
+    // RENDER LAPORAN UMUM
     // ======================================================
     let allLaporan = [];
     let activeYear = null;
@@ -1067,28 +1305,30 @@
             <div class="amount">${formatRupiah(saldo)}</div>
           </div>
         </div>
-        <table class="table-laporan">
-          <thead>
-            <tr>
-              <th>Bulan</th>
-              <th>Keterangan</th>
-              <th>Pendapatan</th>
-              <th>Pengeluaran</th>
-              <th>Saldo</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${filtered.map(d => `
+        <div class="table-wrap">
+          <table class="table-laporan">
+            <thead>
               <tr>
-                <td><strong>${namaBulan[d.Bulan] || d.Bulan}</strong></td>
-                <td>${d.NamaLaporan} <span style="color:var(--gray-600);font-size:12px;">${d.Keterangan ? '· ' + d.Keterangan : ''}</span></td>
-                <td class="badge-income">${formatRupiah(d.Pendapatan)}</td>
-                <td class="badge-expense">${formatRupiah(d.Pengeluaran)}</td>
-                <td style="font-weight:600;">${formatRupiah(Number(d.Pendapatan) - Number(d.Pengeluaran))}</td>
+                <th>Bulan</th>
+                <th>Keterangan</th>
+                <th>Pendapatan</th>
+                <th>Pengeluaran</th>
+                <th>Saldo</th>
               </tr>
-            `).join('')}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              ${filtered.map(d => `
+                <tr>
+                  <td><strong>${namaBulan[d.Bulan] || d.Bulan}</strong></td>
+                  <td>${d.NamaLaporan} <span style="color:var(--gray-600);font-size:12px;">${d.Keterangan ? '· ' + d.Keterangan : ''}</span></td>
+                  <td class="badge-income">${formatRupiah(d.Pendapatan)}</td>
+                  <td class="badge-expense">${formatRupiah(d.Pengeluaran)}</td>
+                  <td style="font-weight:600;">${formatRupiah(Number(d.Pendapatan) - Number(d.Pengeluaran))}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
       `;
     }
 
@@ -1096,6 +1336,193 @@
       activeYear = year;
       const years = JSON.parse(yearsStr.replace(/\\'/g, "'"));
       renderLaporan(years);
+    }
+
+    // ======================================================
+    // LAPORAN IPL PER BLOK
+    // ======================================================
+    let allIPLData = [];
+    let iplLoaded = false;
+
+    async function loadIPLData() {
+      // Ambil data IPL dari API — action: getIPL
+      // Data yang diharapkan dari API:
+      // [{ Blok, NomorRumah, NamaKepalaKeluarga, Bulan, Tahun, Status (Lunas/Belum), JumlahIPL, TanggalBayar }]
+      const { status, data } = await fetchAPI('getIPL');
+      if (status === 'success' && data && data.length) {
+        allIPLData = data;
+        buildBlokOptions();
+        buildTahunOptions();
+        iplLoaded = true;
+      } else {
+        // Jika endpoint belum ada, tampilkan petunjuk integrasi
+        document.getElementById('iplContent').innerHTML = `
+          <div class="empty-state">
+            <div style="font-size:52px;">⚙️</div>
+            <p style="margin-top:12px;font-size:15px;font-weight:600;color:var(--primary-dark);">Endpoint API <code>getIPL</code> belum tersedia</p>
+            <p style="font-size:13px;color:var(--gray-600);margin-top:8px;max-width:500px;margin-left:auto;margin-right:auto;">
+              Tambahkan fungsi <strong>getIPL()</strong> di Google Apps Script kamu yang mengembalikan data dengan field:<br>
+              <code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;">Blok, NomorRumah, NamaKepalaKeluarga, Bulan, Tahun, Status, JumlahIPL, TanggalBayar</code>
+            </p>
+          </div>
+        `;
+      }
+    }
+
+    function buildBlokOptions() {
+      const sel = document.getElementById('filterBlok');
+      const bloks = [...new Set(allIPLData.map(d => d.Blok).filter(Boolean))].sort();
+      sel.innerHTML = `<option value="">-- Semua Blok --</option>`;
+      bloks.forEach(b => {
+        const opt = document.createElement('option');
+        opt.value = b;
+        opt.textContent = 'Blok ' + b;
+        sel.appendChild(opt);
+      });
+    }
+
+    function buildTahunOptions() {
+      const sel = document.getElementById('filterTahunIPL');
+      const years = [...new Set(allIPLData.map(d => d.Tahun).filter(Boolean))].sort((a,b) => b-a);
+      sel.innerHTML = `<option value="">Semua Tahun</option>`;
+      years.forEach(y => {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        if (y == new Date().getFullYear()) opt.selected = true;
+        sel.appendChild(opt);
+      });
+    }
+
+    function applyIPLFilter() {
+      const blok = document.getElementById('filterBlok').value;
+      const bulan = document.getElementById('filterBulanIPL').value;
+      const tahun = document.getElementById('filterTahunIPL').value;
+
+      if (!iplLoaded) {
+        document.getElementById('iplContent').innerHTML = `
+          <div class="empty-state">
+            <div style="font-size:52px;">⚙️</div>
+            <p style="margin-top:12px;">Endpoint <code>getIPL</code> belum tersedia di API.</p>
+          </div>`;
+        return;
+      }
+
+      let filtered = [...allIPLData];
+      if (blok) filtered = filtered.filter(d => d.Blok === blok);
+      if (bulan) filtered = filtered.filter(d => String(d.Bulan) === String(bulan));
+      if (tahun) filtered = filtered.filter(d => String(d.Tahun) === String(tahun));
+
+      renderIPLResult(filtered, blok, bulan, tahun);
+    }
+
+    const namaBulan = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+    function renderIPLResult(data, blok, bulan, tahun) {
+      const container = document.getElementById('iplContent');
+      if (!data.length) {
+        container.innerHTML = `<div class="empty-state"><div style="font-size:48px;">🔍</div><p>Tidak ada data untuk filter ini.</p></div>`;
+        return;
+      }
+
+      const totalKK = data.length;
+      const lunasData = data.filter(d => d.Status === 'Lunas');
+      const tunggakanData = data.filter(d => d.Status !== 'Lunas');
+      const totalLunas = lunasData.length;
+      const totalTunggakan = tunggakanData.length;
+      const pct = Math.round((totalLunas / totalKK) * 100);
+
+      const totalPemasukan = lunasData.reduce((s, d) => s + Number(d.JumlahIPL || 0), 0);
+      const totalTagihan = data.reduce((s, d) => s + Number(d.JumlahIPL || 0), 0);
+      const sisaTunggakan = totalTagihan - totalPemasukan;
+
+      // Label judul filter
+      const labelBlok = blok ? `Blok ${blok}` : 'Semua Blok';
+      const labelBulan = bulan ? namaBulan[parseInt(bulan)] : 'Semua Bulan';
+      const labelTahun = tahun || 'Semua Tahun';
+
+      container.innerHTML = `
+        <!-- Header hasil filter -->
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap;">
+          <span class="ipl-blok-badge">🏘️ ${labelBlok}</span>
+          <span style="font-size:14px;color:var(--gray-600);">📅 ${labelBulan} ${labelTahun}</span>
+          <span style="font-size:13px;color:var(--gray-600);margin-left:auto;">${totalKK} unit terdaftar</span>
+        </div>
+
+        <!-- Summary cards -->
+        <div class="laporan-summary" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
+          <div class="summary-card income">
+            <div class="label">Total Pemasukan IPL</div>
+            <div class="amount">${formatRupiah(totalPemasukan)}</div>
+          </div>
+          <div class="summary-card lunas">
+            <div class="label">Unit Lunas</div>
+            <div class="amount">${totalLunas} unit</div>
+            <div class="progress-wrap">
+              <div class="progress-label"><span>Persentase lunas</span><span>${pct}%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+            </div>
+          </div>
+          <div class="summary-card tunggakan">
+            <div class="label">Unit Belum Lunas</div>
+            <div class="amount">${totalTunggakan} unit</div>
+          </div>
+          <div class="summary-card expense">
+            <div class="label">Sisa Tunggakan</div>
+            <div class="amount">${formatRupiah(sisaTunggakan)}</div>
+          </div>
+        </div>
+
+        <!-- Tabel detail -->
+        <div class="table-wrap">
+          <table class="table-laporan">
+            <thead>
+              <tr>
+                <th>Blok</th>
+                <th>No. Rumah</th>
+                <th>Kepala Keluarga</th>
+                <th>Periode</th>
+                <th>Tagihan IPL</th>
+                <th>Status</th>
+                <th>Tgl Bayar</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.map(d => `
+                <tr>
+                  <td><strong>${d.Blok || '-'}</strong></td>
+                  <td>${d.NomorRumah || '-'}</td>
+                  <td>${d.NamaKepalaKeluarga || '-'}</td>
+                  <td>${namaBulan[parseInt(d.Bulan)] || d.Bulan || '-'} ${d.Tahun || ''}</td>
+                  <td style="font-weight:600;">${formatRupiah(d.JumlahIPL || 0)}</td>
+                  <td>
+                    <span class="${d.Status === 'Lunas' ? 'badge-lunas' : 'badge-tunggakan'}">
+                      ${d.Status === 'Lunas' ? '✅ Lunas' : '⏳ Belum'}
+                    </span>
+                  </td>
+                  <td style="font-size:12px;color:var(--gray-600);">${d.TanggalBayar ? formatDate(d.TanggalBayar) : '—'}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    // ======================================================
+    // MAIN TAB SWITCHER (Umum | IPL per Blok)
+    // ======================================================
+    function switchMainTab(tab) {
+      document.querySelectorAll('.main-tab-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', (i === 0 && tab === 'umum') || (i === 1 && tab === 'ipl'));
+      });
+      document.getElementById('panel-umum').classList.toggle('active', tab === 'umum');
+      document.getElementById('panel-ipl').classList.toggle('active', tab === 'ipl');
+
+      // Lazy-load IPL data saat pertama kali tab IPL dibuka
+      if (tab === 'ipl' && !iplLoaded) {
+        loadIPLData();
+      }
     }
 
     // ======================================================
@@ -1108,9 +1535,7 @@
           document.getElementById('statKK').textContent = data.totalKK ?? '—';
           document.getElementById('statLunas').textContent = data.lunas ?? '—';
         }
-      } catch(e) {
-        // biarkan "—"
-      }
+      } catch(e) {}
     }
 
     // ======================================================
@@ -1155,7 +1580,6 @@
     loadStruktur();
     loadLaporan();
 
-    // Hamburger menu (mobile friendly)
     document.querySelector('.nav-hamburger').addEventListener('click', function() {
       alert('Menu navigasi: Berita | Pengumuman | Struktur | Keuangan');
     });
