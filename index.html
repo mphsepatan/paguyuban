@@ -1491,8 +1491,8 @@
               ${data.map(d => `
                 <tr>
                   <td><strong>${d.Blok || '-'}</strong></td>
-                  <td>${d.NomorRumah || '-'}</td>
-                  <td>${d.NamaKepalaKeluarga || '-'}</td>
+                  <td>${d.Nomor || '-'}</td>
+                  <td>${d.NamaKepala || '-'}</td>
                   <td>${namaBulan[parseInt(d.Bulan)] || d.Bulan || '-'} ${d.Tahun || ''}</td>
                   <td style="font-weight:600;">${formatRupiah(d.JumlahIPL || 0)}</td>
                   <td>
