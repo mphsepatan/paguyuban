@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>MPHS Living — Mutiara Puri Harmoni Sepatan | Portal Warga Modern</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fbfdfe;
+      color: #1a2c3e;
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --primary: #166534;
+      --primary-dark: #14532d;
+      --primary-light: #dcfce7;
+      --secondary: #2d6a4f;
+      --accent: #40916c;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-600: #475569;
+      --gray-800: #1e293b;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.05);
+      --shadow: 0 8px 20px rgba(0,0,0,0.03), 0 4px 8px rgba(0,0,0,0.05);
+      --shadow-lg: 0 20px 35px -10px rgba(0,0,0,0.08);
+      --radius: 20px;
+      --radius-lg: 28px;
+    }
+
+    /* navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(22,101,52,0.1);
+      z-index: 100;
+      padding: 0.8rem 2rem;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: white;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      overflow: hidden;
+      padding: 6px;
+    }
+
+    .logo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .logo-text h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -0.3px;
+    }
+
+    .logo-text p {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      transition: 0.2s;
+    }
+
+    .nav-menu a:hover {
+      color: var(--primary);
+    }
+
+    .btn-login-modern {
+      background: var(--primary);
+      color: white;
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      transition: 0.2s;
+      box-shadow: 0 4px 8px rgba(22,101,52,0.2);
+      text-decoration: none;
+    }
+
+    .btn-login-modern:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Hero Slider */
+    .hero-slider {
+      position: relative;
+      min-height: 90vh;
+      overflow: hidden;
+    }
+
+    .slides-container {
+      position: relative;
+      width: 100%;
+      height: 90vh;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+      display: flex;
+      align-items: center;
+    }
+
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .slide1 {
+      background: linear-gradient(125deg, #ebf7ef 0%, #d1fae5 100%);
+    }
+
+    .slide2 {
+      background: linear-gradient(125deg, #e0f2fe 0%, #bae6fd 100%);
+    }
+
+    .slide3 {
+      background: linear-gradient(125deg, #fef3c7 0%, #fde68a 100%);
+    }
+
+    .slide-content {
+      max-width: 700px;
+      padding: 0 5%;
+      margin-top: 60px;
+    }
+
+    .hero-badge-new {
+      background: rgba(22,101,52,0.12);
+      backdrop-filter: blur(4px);
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    .slide-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.2rem);
+      font-weight: 800;
+      color: #0b3b2a;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+    }
+
+    .slide2 .slide-content h2 {
+      color: #1e3a5f;
+    }
+
+    .slide3 .slide-content h2 {
+      color: #78350f;
+    }
+
+    .slide-content p {
+      font-size: 1.1rem;
+      color: #2c5e48;
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+
+    .slide2 .slide-content p {
+      color: #2c5282;
+    }
+
+    .slide3 .slide-content p {
+      color: #92400e;
+    }
+
+    .hero-buttons-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary-green {
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: 0.2s;
+      display: inline-block;
+    }
+
+    .btn-outline-green {
+      background: transparent;
+      border: 1.5px solid var(--primary);
+      color: var(--primary);
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(8px);
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--primary-dark);
+      transition: 0.2s;
+      z-index: 10;
+    }
+
+    .slider-arrow:hover {
+      background: rgba(255,255,255,0.7);
+    }
+
+    .slider-arrow.prev {
+      left: 20px;
+    }
+
+    .slider-arrow.next {
+      right: 20px;
+    }
+
+    .slider-nav {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 10;
+    }
+
+    .slider-dot {
+      width: 40px;
+      height: 4px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .slider-dot.active {
+      background: var(--primary);
+      width: 60px;
+    }
+
+    .hero-stats-modern {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .stat-item {
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(10px);
+      padding: 0.8rem 1.2rem;
+      border-radius: 24px;
+    }
+
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    /* sections */
+    .section-modern {
+      padding: 5rem 5%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-header-modern {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-tag-modern {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .section-title-modern {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-top: 0.5rem;
+    }
+
+    /* news grid */
+    .news-grid-premium {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .card-premium {
+      background: white;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+      cursor: pointer;
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .card-premium:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-img {
+      height: 200px;
+      background: #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-category {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    /* announcement */
+    .announcement-modern {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .ann-card {
+      background: white;
+      border-radius: 24px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      box-shadow: var(--shadow-sm);
+      border-left: 5px solid var(--accent);
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .ann-card.urgent {
+      border-left-color: #ef4444;
+      background: #fffaf5;
+    }
+
+    /* struktur */
+    .org-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .org-person {
+      background: white;
+      border-radius: 32px;
+      padding: 1.6rem;
+      text-align: center;
+      width: 200px;
+      box-shadow: var(--shadow);
+      transition: 0.2s;
+    }
+
+    .org-avatar {
+      width: 90px;
+      height: 90px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      overflow: hidden;
+    }
+
+    /* finance tabs */
+    .finance-tabs {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .finance-tab {
+      background: white;
+      border: 1px solid var(--gray-200);
+      padding: 0.6rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .finance-tab.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .summary-item {
+      background: white;
+      border-radius: 24px;
+      padding: 1.2rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-ipl {
+      background: white;
+      padding: 1.2rem;
+      border-radius: 28px;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: flex-end;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .filter-group label {
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    select, .btn-filter {
+      padding: 0.6rem 1rem;
+      border-radius: 16px;
+      border: 1px solid var(--gray-200);
+      background: var(--gray-50);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-filter {
+      background: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 24px;
+    }
+
+    .finance-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .finance-table th {
+      background: var(--primary);
+      color: white;
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .finance-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .badge-lunas {
+      background: #dcfce7;
+      color: #15803d;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    .badge-tunggak {
+      background: #fee2e2;
+      color: #b91c1c;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    .loading-state, .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--gray-600);
+    }
+
+    footer {
+      background: #0f2f1f;
+      color: #ccc;
+      padding: 3rem 5% 1.5rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      .hamburger {
+        display: block;
+      }
+      .slides-container {
+        height: 100vh;
+      }
+      .slide-content h2 {
+        font-size: 2rem;
+      }
+      .slider-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+      }
+      .section-title-modern {
+        font-size: 1.8rem;
+      }
+      .hero-stats-modern {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="#" class="logo-area">
+      <div class="logo-icon">
+        <img src="https://raw.githubusercontent.com/mphsepatan/paguyuban/refs/heads/main/assets/img/logo.png" alt="Logo MPHS">
+      </div>
+      <div class="logo-text">
+        <h1>MPHS Living</h1>
+        <p>Mutiara Puri Harmoni Sepatan</p>
+      </div>
+    </a>
+    <ul class="nav-menu">
+      <li><a href="#berita">Berita</a></li>
+      <li><a href="#pengumuman">Pengumuman</a></li>
+      <li><a href="#struktur">Struktur</a></li>
+      <li><a href="#laporan">Keuangan</a></li>
+    </ul>
+    <a href="#" class="btn-login-modern"><i class="fas fa-user-shield"></i> Login Pengurus</a>
+    <button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<!-- Hero Slider Section -->
+<section class="hero-slider">
+  <div class="slides-container">
+    <div class="slide slide1 active">
+      <div class="slide-content">
+        <div class="hero-badge-new"><i class="fas fa-leaf"></i> Hidup Harmoni</div>
+        <h2>Rumah Nyaman <br>Lingkungan Asri</h2>
+        <p>Portal warga Mutiara Puri Harmoni Sepatan. Informasi transparan, gotong royong, dan lingkungan yang lebih baik untuk kita semua.</p>
+        <div class="hero-buttons-group">
+          <a href="#berita" class="btn-primary-green">Jelajahi <i class="fas fa-arrow-right"></i></a>
+          <a href="#laporan" class="btn-outline-green">Lihat Keuangan</a>
+        </div>
+        <div class="hero-stats-modern" id="heroStats">
+          <div class="stat-item"><span class="stat-number" id="statKK">--</span><br>KK Aktif</div>
+          <div class="stat-item"><span class="stat-number" id="statLunas">--</span><br>IPL Lunas</div>
+          <div class="stat-item"><span class="stat-number" id="statNews">--</span><br>Berita</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide slide2">
+      <div class="slide-content">
+        <div class="hero-badge-new"><i class="fas fa-users"></i> Kebersamaan</div>
+        <h2>Gotong Royong <br>Membangun Komunitas</h2>
+        <p>Bersama warga, kita ciptakan lingkungan yang aman, nyaman, dan harmonis untuk seluruh keluarga.</p>
+        <div class="hero-buttons-group">
+          <a href="#pengumuman" class="btn-primary-green">Lihat Kegiatan <i class="fas fa-calendar-alt"></i></a>
+          <a href="#struktur" class="btn-outline-green">Kenali Pengurus</a>
+        </div>
+      </div>
+    </div>
+    <div class="slide slide3">
+      <div class="slide-content">
+        <div class="hero-badge-new"><i class="fas fa-chart-line"></i> Transparansi</div>
+        <h2>Keuangan Terbuka <br>Untuk Semua</h2>
+        <p>Pantau langsung laporan keuangan perumahan dan status iuran warga secara real-time dan akuntabel.</p>
+        <div class="hero-buttons-group">
+          <a href="#laporan" class="btn-primary-green">Cek Laporan <i class="fas fa-file-invoice-dollar"></i></a>
+          <a href="#berita" class="btn-outline-green">Berita Terkini</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="slider-arrow prev" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+  <button class="slider-arrow next" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+
+  <div class="slider-nav">
+    <div class="slider-dot active" data-slide="0"></div>
+    <div class="slider-dot" data-slide="1"></div>
+    <div class="slider-dot" data-slide="2"></div>
+  </div>
+</section>
+
+<main>
+  <!-- Berita Section -->
+  <section id="berita" class="section-modern">
+    <div class="section-header-modern">
+      <div class="section-tag-modern">Kabar Perumahan</div>
+      <h2 class="section-title-modern">Berita & Kegiatan</h2>
+    </div>
+    <div class="news-grid-premium" id="newsGrid"><div class="loading-state"><i class="fas fa-spinner fa-pulse"></i> Memuat berita...</div></div>
+  </section>
+
+  <!-- Pengumuman -->
+  <section id="pengumuman" class="section-modern" style="background:#fafef7; border-radius: 48px; margin: 0 5% 2rem;">
+    <div class="section-header-modern">
+      <div class="section-tag-modern">Penting</div>
+      <h2 class="section-title-modern">Pengumuman Resmi</h2>
+    </div>
+    <div class="announcement-modern" id="announcementList"></div>
+  </section>
+
+  <!-- Struktur Organisasi -->
+  <section id="struktur" class="section-modern">
+    <div class="section-header-modern">
+      <div class="section-tag-modern">Kepengurusan</div>
+      <h2 class="section-title-modern">Struktur Pengurus</h2>
+    </div>
+    <div id="orgContainer" class="org-grid"></div>
+  </section>
+
+  <!-- Laporan keuangan + IPL per Blok -->
+  <section id="laporan" class="section-modern">
+    <div class="section-header-modern">
+      <div class="section-tag-modern">Transparansi Finansial</div>
+      <h2 class="section-title-modern">Laporan Keuangan</h2>
+    </div>
+
+    <div class="finance-tabs">
+      <div class="finance-tab active" data-tab="umum">📊 Laporan Umum</div>
+      <div class="finance-tab" data-tab="ipl">🏘️ Status IPL per Blok</div>
+    </div>
+
+    <div id="panelUmum" class="panel active">
+      <div id="laporanUmumContainer"></div>
+    </div>
+
+    <div id="panelIpl" class="panel">
+      <div class="filter-ipl">
+        <div class="filter-group"><label>Pilih Blok</label><select id="blokFilter"><option value="">-- Semua Blok --</option></select></div>
+        <div class="filter-group"><label>Bulan</label><select id="bulanFilter"><option value="">Semua</option><option>Januari</option><option>Februari</option><option>Maret</option><option>April</option><option>Mei</option><option>Juni</option><option>Juli</option><option>Agustus</option><option>September</option><option>Oktober</option><option>November</option><option>Desember</option></select></div>
+        <div class="filter-group"><label>Tahun</label><select id="tahunFilter"><option value="">Semua</option></select></div>
+        <button class="btn-filter" id="applyIplFilter"><i class="fas fa-search"></i> Tampilkan</button>
+      </div>
+      <div id="iplResultArea">Silahkan pilih filter dan klik tampilkan.</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div style="max-width:1200px;margin:auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:2rem;">
+    <div><i class="fas fa-leaf" style="color:#40916c;"></i> <strong>MPHS Living</strong><br>Mutiara Puri Harmoni Sepatan<br>Bersama Wujudkan Lingkungan Harmoni</div>
+    <div><i class="fas fa-phone-alt"></i> Hotline: 021-XXXXXXX<br><i class="fas fa-envelope"></i> pengurus@mphs.id</div>
+    <div>© 2026 MPHS - Portal Warga Modern<br>Technical Support: GOTARO</div>
+  </div>
+</footer>
+
+<script>
+  // ========== SLIDER ==========
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.slider-dot');
+  const totalSlides = slides.length;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    showSlide((currentSlide + 1) % totalSlides);
+  }
+
+  function prevSlide() {
+    showSlide((currentSlide - 1 + totalSlides) % totalSlides);
+  }
+
+  let slideInterval = setInterval(nextSlide, 5000);
+  function resetInterval() {
+    clearInterval(slideInterval);
+    slideInterval = setInterval(nextSlide, 5000);
+  }
+
+  document.getElementById('prevSlide').addEventListener('click', () => { prevSlide(); resetInterval(); });
+  document.getElementById('nextSlide').addEventListener('click', () => { nextSlide(); resetInterval(); });
+  dots.forEach((dot, idx) => {
+    dot.addEventListener('click', () => { showSlide(idx); resetInterval(); });
+  });
+
+  // ========== API ==========
+  const API_URL = 'https://script.google.com/macros/s/AKfycbycFg87fXLxPFnGXdHHkA-Rh5647z-ASxboe7PEsf2rVDzD99ZjkLvxlW7nxcsJfHX4/exec';
+  
+  function fetchAPIJsonp(action, params = {}) {
+    return new Promise((resolve, reject) => {
+      const cbName = 'mphs_cb_' + Date.now() + '_' + Math.random().toString(36).substr(2, 8);
+      const url = new URL(API_URL);
+      url.searchParams.set('action', action);
+      url.searchParams.set('callback', cbName);
+      Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, String(v)));
+      
+      const timer = setTimeout(() => { cleanup(); reject(new Error('Timeout')); }, 20000);
+      
+      function cleanup() {
+        clearTimeout(timer);
+        try { delete window[cbName]; } catch(e) {}
+        const el = document.getElementById('jsonp_' + cbName);
+        if (el) el.remove();
+      }
+      
+      window[cbName] = function(data) { cleanup(); resolve(data); };
+      
+      const script = document.createElement('script');
+      script.id = 'jsonp_' + cbName;
+      script.src = url.toString();
+      script.onerror = () => { cleanup(); reject(new Error('Script error')); };
+      document.head.appendChild(script);
+    });
+  }
+  
+  async function fetchAPI(action, params = {}) {
+    try {
+      return await fetchAPIJsonp(action, params);
+    } catch(err) {
+      console.error(err);
+      return { status: 'error', message: err.message };
+    }
+  }
+
+  function formatRupiah(num) { 
+    return 'Rp ' + Number(num).toLocaleString('id-ID'); 
+  }
+  
+  function formatDate(dateStr) { 
+    if(!dateStr) return '-'; 
+    try { 
+      return new Date(dateStr).toLocaleDateString('id-ID'); 
+    } catch(e){ 
+      return dateStr; 
+    } 
+  }
+
+  // Load Berita
+  async function loadNews() {
+    const grid = document.getElementById('newsGrid');
+    const res = await fetchAPI('getNews');
+    if(res.status !== 'success' || !res.data || !res.data.length) {
+      grid.innerHTML = '<div class="empty-state"><i class="fas fa-newspaper"></i> Belum ada berita</div>';
+      document.getElementById('statNews').innerText = '0';
+      return;
+    }
+    const data = res.data;
+    document.getElementById('statNews').innerText = data.length;
+    grid.innerHTML = data.map(n => `
+      <div class="card-premium" onclick="alert('${n.Judul}\\n\\n${(n.Isi || '').substring(0, 300)}')">
+        <div class="card-img">${n.Gambar ? `<img src="${n.Gambar}" alt="${n.Judul}">` : '📸'}</div>
+        <div class="card-body">
+          <span class="card-category">${n.Kategori || 'Info'}</span>
+          <div class="card-title">${n.Judul}</div>
+          <p style="color:var(--gray-600);font-size:0.8rem;">${n.Ringkasan || (n.Isi ? n.Isi.substring(0,100)+'...' : '')}</p>
+          <div style="font-size:0.7rem;margin-top:0.5rem;">📅 ${formatDate(n.Tanggal)}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Pengumuman
+  async function loadPengumuman() {
+    const container = document.getElementById('announcementList');
+    const res = await fetchAPI('getPengumuman');
+    if(res.status !== 'success' || !res.data?.length) { 
+      container.innerHTML = '<div class="empty-state">Tidak ada pengumuman.</div>'; 
+      return; 
+    }
+    const data = res.data;
+    container.innerHTML = data.map(p => `
+      <div class="ann-card ${p.Prioritas === 'Tinggi' ? 'urgent' : ''}" onclick="alert('${p.Judul}\\n\\n${(p.Isi || '').substring(0, 300)}')">
+        <div><i class="fas fa-bullhorn" style="font-size:1.4rem; color:${p.Prioritas === 'Tinggi' ? '#dc2626' : '#40916c'}"></i></div>
+        <div>
+          <strong>${p.Judul}</strong><br>
+          <small>${formatDate(p.Tanggal)} · ${p.Author || 'Admin'}</small>
+          <div style="margin-top:6px;">${(p.Isi || '').substring(0, 100)}...</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Struktur
+  async function loadStruktur() {
+    const container = document.getElementById('orgContainer');
+    const res = await fetchAPI('getStruktur');
+    if(res.status !== 'success' || !res.data?.length) { 
+      container.innerHTML = '<div class="empty-state">Data struktur belum tersedia.</div>'; 
+      return; 
+    }
+    const data = res.data;
+    container.innerHTML = data.map(p => `
+      <div class="org-person">
+        <div class="org-avatar">${p.Foto ? `<img src="${p.Foto}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" alt="${p.Nama}">` : '👤'}</div>
+        <div style="font-weight:700;">${p.Nama}</div>
+        <div style="font-size:0.7rem; color:var(--accent);">${p.Jabatan}</div>
+        <div style="font-size:0.6rem;">${p.Periode || ''}</div>
+      </div>
+    `).join('');
+  }
+
+  // Laporan Umum (diperbaiki)
+  let laporanData = [];
+  async function loadLaporanUmum() {
+    const container = document.getElementById('laporanUmumContainer');
+    const res = await fetchAPI('getLaporan');
+    
+    if(res.status !== 'success' || !res.data?.length) {
+      container.innerHTML = '<div class="empty-state">Data laporan belum tersedia.</div>';
+      return;
+    }
+    
+    laporanData = res.data;
+    const years = [...new Set(laporanData.map(d => d.Tahun))].sort((a,b)=>b-a);
+    const activeYear = years[0];
+    renderLaporanTable(activeYear, years);
+  }
+
+  function renderLaporanTable(year, yearsArr) {
+    const filtered = laporanData.filter(d => String(d.Tahun) === String(year));
+    const totalPendapatan = filtered.reduce((s,d)=>s + (Number(d.Pendapatan) || 0), 0);
+    const totalPengeluaran = filtered.reduce((s,d)=>s + (Number(d.Pengeluaran) || 0), 0);
+    const saldo = totalPendapatan - totalPengeluaran;
+    const bulanMap = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+    
+    let html = `
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.5rem; justify-content:center;">
+        ${yearsArr.map(y => `<button class="finance-tab" style="background:${y==year?'var(--primary)':'white'};color:${y==year?'white':'#1e293b'};border:none;" onclick="changeYear(${y})">${y}</button>`).join('')}
+      </div>
+      <div class="summary-cards">
+        <div class="summary-item"><strong>💵 Pendapatan</strong><br><span style="font-size:1.6rem;font-weight:700;">${formatRupiah(totalPendapatan)}</span></div>
+        <div class="summary-item"><strong>📉 Pengeluaran</strong><br><span style="font-size:1.6rem;font-weight:700;">${formatRupiah(totalPengeluaran)}</span></div>
+        <div class="summary-item"><strong>⚖️ Saldo</strong><br><span style="font-size:1.6rem;font-weight:700;">${formatRupiah(saldo)}</span></div>
+      </div>
+      <div class="table-wrapper">
+        <table class="finance-table">
+          <thead>
+            <tr>
+              <th>Bulan</th>
+              <th>Keterangan</th>
+              <th>Pendapatan</th>
+              <th>Pengeluaran</th>
+            </tr>
+          </thead>
+          <tbody>
+    `;
+    
+    filtered.forEach(d => {
+      html += `
+        <tr>
+          <td><strong>${bulanMap[d.Bulan] || d.Bulan || '-'}</strong></td>
+          <td>${d.NamaLaporan || '-'}</td>
+          <td style="color:#15803d; font-weight:600;">${formatRupiah(d.Pendapatan || 0)}</td>
+          <td style="color:#b91c1c; font-weight:600;">${formatRupiah(d.Pengeluaran || 0)}</td>
+        </tr>
+      `;
+    });
+    
+    html += `
+          </tbody>
+        </table>
+      </div>
+    `;
+    
+    document.getElementById('laporanUmumContainer').innerHTML = html;
+  }
+
+  window.changeYear = (year) => {
+    const years = [...new Set(laporanData.map(d => d.Tahun))].sort((a,b)=>b-a);
+    renderLaporanTable(year, years);
+  };
+
+  // IPL per Blok
+  let iplMaster = [];
+  async function loadIPLData() {
+    const res = await fetchAPI('getIPL');
+    if(res.status === 'success' && res.data && res.data.length) {
+      iplMaster = res.data;
+    } else {
+      // Demo data
+      iplMaster = [
+        { Blok: 'A', Nomor: 'A1', NamaKepala: 'Budi Santoso', Bulan: 'Mei', Tahun: '2026', Status: 'Lunas', JumlahIPL: 350000, TanggalBayar: '2026-05-01' },
+        { Blok: 'A', Nomor: 'A2', NamaKepala: 'Siti Aminah', Bulan: 'Mei', Tahun: '2026', Status: 'Belum', JumlahIPL: 350000, TanggalBayar: '' },
+        { Blok: 'B', Nomor: 'B5', NamaKepala: 'Agus Wijaya', Bulan: 'Mei', Tahun: '2026', Status: 'Lunas', JumlahIPL: 350000, TanggalBayar: '2026-05-02' },
+        { Blok: 'B', Nomor: 'B6', NamaKepala: 'Dewi Sartika', Bulan: 'Mei', Tahun: '2026', Status: 'Lunas', JumlahIPL: 350000, TanggalBayar: '2026-05-03' },
+        { Blok: 'C', Nomor: 'C10', NamaKepala: 'Eko Prasetyo', Bulan: 'Mei', Tahun: '2026', Status: 'Belum', JumlahIPL: 350000, TanggalBayar: '' }
+      ];
+    }
+    
+    // populate filters
+    const blokSet = new Set(iplMaster.map(d => d.Blok).filter(Boolean));
+    const blokSelect = document.getElementById('blokFilter');
+    blokSelect.innerHTML = '<option value="">-- Semua Blok --</option>';
+    for(let b of blokSet) blokSelect.innerHTML += `<option value="${b}">Blok ${b}</option>`;
+    
+    const tahunSet = new Set(iplMaster.map(d => d.Tahun).filter(Boolean));
+    const tahunSelect = document.getElementById('tahunFilter');
+    tahunSelect.innerHTML = '<option value="">Semua Tahun</option>';
+    for(let t of tahunSet) tahunSelect.innerHTML += `<option value="${t}">${t}</option>`;
+  }
+
+  function renderIPLTable(blok, bulan, tahun) {
+    let filtered = [...iplMaster];
+    if(blok) filtered = filtered.filter(d => d.Blok === blok);
+    if(bulan && bulan !== 'Semua') filtered = filtered.filter(d => d.Bulan === bulan);
+    if(tahun) filtered = filtered.filter(d => String(d.Tahun) === String(tahun));
+    
+    if(!filtered.length) { 
+      document.getElementById('iplResultArea').innerHTML = '<div class="empty-state">🔍 Tidak ada data untuk filter ini.</div>'; 
+      return; 
+    }
+    
+    const totalKK = filtered.length;
+    const lunas = filtered.filter(d => d.Status === 'Lunas').length;
+    const totalTagihan = filtered.reduce((s,d)=>s + (Number(d.JumlahIPL) || 0), 0);
+    const pemasukan = filtered.filter(d=>d.Status==='Lunas').reduce((s,d)=>s + (Number(d.JumlahIPL) || 0), 0);
+    const sisa = totalTagihan - pemasukan;
+    
+    let html = `
+      <div class="summary-cards">
+        <div class="summary-item">🏠 Total Unit: ${totalKK}</div>
+        <div class="summary-item">✅ Lunas: ${lunas}</div>
+        <div class="summary-item">⏳ Belum: ${totalKK-lunas}</div>
+        <div class="summary-item">💸 Tunggakan: ${formatRupiah(sisa)}</div>
+      </div>
+      <div class="table-wrapper">
+        <table class="finance-table">
+          <thead>
+            <tr>
+              <th>Blok</th>
+              <th>No. Rumah</th>
+              <th>Kepala Keluarga</th>
+              <th>Periode</th>
+              <th>Tagihan</th>
+              <th>Status</th>
+              <th>Tgl Bayar</th>
+            </tr>
+          </thead>
+          <tbody>
+    `;
+    
+    filtered.forEach(i => {
+      html += `
+        <tr>
+          <td><strong>${i.Blok || '-'}</strong></td>
+          <td>${i.Nomor || '-'}</td>
+          <td>${i.NamaKepala || '-'}</td>
+          <td>${i.Bulan || '-'} ${i.Tahun || ''}</td>
+          <td>${formatRupiah(i.JumlahIPL || 0)}</td>
+          <td><span class="${i.Status === 'Lunas' ? 'badge-lunas' : 'badge-tunggak'}">${i.Status === 'Lunas' ? '✅ Lunas' : '⏳ Belum'}</span></td>
+          <td>${i.TanggalBayar ? formatDate(i.TanggalBayar) : '-'}</td>
+        </tr>
+      `;
+    });
+    
+    html += `
+          </tbody>
+        </table>
+      </div>
+    `;
+    
+    document.getElementById('iplResultArea').innerHTML = html;
+  }
+
+  document.getElementById('applyIplFilter')?.addEventListener('click', () => {
+    const blok = document.getElementById('blokFilter').value;
+    const bulan = document.getElementById('bulanFilter').value;
+    const tahun = document.getElementById('tahunFilter').value;
+    renderIPLTable(blok, bulan, tahun);
+  });
+
+  // Stats
+  async function loadStats() {
+    const res = await fetchAPI('getStats');
+    if(res.status === 'success' && res.data) {
+      document.getElementById('statKK').innerText = res.data.totalKK || '245';
+      document.getElementById('statLunas').innerText = res.data.lunas || '189';
+    } else {
+      document.getElementById('statKK').innerText = '320';
+      document.getElementById('statLunas').innerText = '278';
+    }
+  }
+
+  // Tabs switching
+  document.querySelectorAll('.finance-tab[data-tab]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.finance-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const target = tab.getAttribute('data-tab');
+      document.getElementById('panelUmum').classList.toggle('active', target === 'umum');
+      document.getElementById('panelIpl').classList.toggle('active', target === 'ipl');
+      if(target === 'ipl' && iplMaster.length === 0) loadIPLData();
+    });
+  });
+
+  document.getElementById('hamburgerBtn')?.addEventListener('click', () => { 
+    alert('Menu: Berita, Pengumuman, Struktur, Keuangan'); 
+  });
+
+  // Initialize
+  loadStats();
+  loadNews();
+  loadPengumuman();
+  loadStruktur();
+  loadLaporanUmum();
+  loadIPLData();
+</script>
+</body>
+</html>
