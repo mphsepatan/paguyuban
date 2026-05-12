@@ -617,6 +617,106 @@
       color: var(--gray-600);
     }
 
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+ backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-container {
+      background: white;
+      width: 90%;
+      max-width: 600px;
+      max-height: 85vh;
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-container {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 1.5rem 1.5rem 0.5rem;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--primary-dark);
+    }
+
+    .modal-close {
+      background: var(--gray-100);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: 0.2s;
+    }
+
+    .modal-close:hover {
+      background: var(--gray-200);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      max-height: 60vh;
+      line-height: 1.7;
+    }
+
+    .modal-body img {
+      width: 100%;
+      border-radius: 16px;
+      margin-bottom: 1rem;
+    }
+
+    .modal-date {
+      font-size: 0.75rem;
+      color: var(--gray-600);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .modal-category {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+
     footer {
       background: #0f2f1f;
       color: #ccc;
@@ -649,6 +749,9 @@
         flex-wrap: wrap;
         gap: 1rem;
       }
+      .modal-container {
+        width: 95%;
+      }
     }
   </style>
 </head>
@@ -661,7 +764,7 @@
         <img src="https://raw.githubusercontent.com/mphsepatan/paguyuban/refs/heads/main/assets/img/logo.png" alt="Logo MPHS">
       </div>
       <div class="logo-text">
-        <h1>MPHS Living</h1>
+        <h1>MPHS</h1>
         <p>Mutiara Puri Harmoni Sepatan</p>
       </div>
     </a>
@@ -671,7 +774,7 @@
       <li><a href="#struktur">Struktur</a></li>
       <li><a href="#laporan">Keuangan</a></li>
     </ul>
-    <a href="#" class="btn-login-modern"><i class="fas fa-user-shield"></i> Login Pengurus</a>
+    <a href="https://mphsepatan.github.io/paguyuban/dashboard.html" class="btn-login-modern"><i class="fas fa-user-shield"></i> Login</a>
     <button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
   </div>
 </nav>
@@ -787,11 +890,24 @@
 
 <footer>
   <div style="max-width:1200px;margin:auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:2rem;">
-    <div><i class="fas fa-leaf" style="color:#40916c;"></i> <strong>MPHS Living</strong><br>Mutiara Puri Harmoni Sepatan<br>Bersama Wujudkan Lingkungan Harmoni</div>
+    <div><i class="fas fa-leaf" style="color:#40916c;"></i> <strong>MPHS</strong><br>Mutiara Puri Harmoni Sepatan<br>Bersama Wujudkan Lingkungan Harmoni</div>
     <div><i class="fas fa-phone-alt"></i> Hotline: 021-XXXXXXX<br><i class="fas fa-envelope"></i> pengurus@mphs.id</div>
-    <div>© 2026 MPHS - Portal Warga Modern<br>Technical Support: GOTARO</div>
+    <div>© 2026 MPHS - Portal Warga Modern<br>Technical Support: Ryuzel</div>
   </div>
 </footer>
+
+<!-- Modal untuk Berita & Pengumuman -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3 id="modalTitle">Detail</h3>
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- konten dinamis -->
+    </div>
+  </div>
+</div>
 
 <script>
   // ========== SLIDER ==========
@@ -828,6 +944,60 @@
   document.getElementById('nextSlide').addEventListener('click', () => { nextSlide(); resetInterval(); });
   dots.forEach((dot, idx) => {
     dot.addEventListener('click', () => { showSlide(idx); resetInterval(); });
+  });
+
+  // ========== MODAL FUNCTION ==========
+  function openModal(title, content, category = '', date = '', image = '') {
+    const modal = document.getElementById('detailModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    
+    modalTitle.innerText = title;
+    
+    let imageHtml = '';
+    if (image) {
+      imageHtml = `<img src="${image}" alt="${title}">`;
+    }
+    
+    let categoryHtml = '';
+    if (category) {
+      categoryHtml = `<span class="modal-category">${category}</span>`;
+    }
+    
+    let dateHtml = '';
+    if (date) {
+      dateHtml = `<div class="modal-date"><i class="far fa-calendar-alt"></i> ${date}</div>`;
+    }
+    
+    modalBody.innerHTML = `
+      ${imageHtml}
+      ${categoryHtml}
+      ${dateHtml}
+      <div style="font-size: 1rem; line-height: 1.7;">${content}</div>
+    `;
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('detailModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Close modal when clicking outside
+  document.getElementById('detailModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeModal();
+    }
+  });
+
+  // Escape key closes modal
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
   });
 
   // ========== API ==========
@@ -876,7 +1046,7 @@
   function formatDate(dateStr) { 
     if(!dateStr) return '-'; 
     try { 
-      return new Date(dateStr).toLocaleDateString('id-ID'); 
+      return new Date(dateStr).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }); 
     } catch(e){ 
       return dateStr; 
     } 
@@ -893,8 +1063,8 @@
     }
     const data = res.data;
     document.getElementById('statNews').innerText = data.length;
-    grid.innerHTML = data.map(n => `
-      <div class="card-premium" onclick="alert('${n.Judul}\\n\\n${(n.Isi || '').substring(0, 300)}')">
+    grid.innerHTML = data.map((n, idx) => `
+      <div class="card-premium" onclick='openNewsModal(${JSON.stringify(n).replace(/'/g, "\\'")})'>
         <div class="card-img">${n.Gambar ? `<img src="${n.Gambar}" alt="${n.Judul}">` : '📸'}</div>
         <div class="card-body">
           <span class="card-category">${n.Kategori || 'Info'}</span>
@@ -906,6 +1076,16 @@
     `).join('');
   }
 
+  window.openNewsModal = function(news) {
+    openModal(
+      news.Judul,
+      news.Isi || 'Tidak ada konten lengkap.',
+      news.Kategori || 'Info',
+      formatDate(news.Tanggal),
+      news.Gambar || ''
+    );
+  };
+
   // Pengumuman
   async function loadPengumuman() {
     const container = document.getElementById('announcementList');
@@ -916,7 +1096,7 @@
     }
     const data = res.data;
     container.innerHTML = data.map(p => `
-      <div class="ann-card ${p.Prioritas === 'Tinggi' ? 'urgent' : ''}" onclick="alert('${p.Judul}\\n\\n${(p.Isi || '').substring(0, 300)}')">
+      <div class="ann-card ${p.Prioritas === 'Tinggi' ? 'urgent' : ''}" onclick='openAnnouncementModal(${JSON.stringify(p).replace(/'/g, "\\'")})'>
         <div><i class="fas fa-bullhorn" style="font-size:1.4rem; color:${p.Prioritas === 'Tinggi' ? '#dc2626' : '#40916c'}"></i></div>
         <div>
           <strong>${p.Judul}</strong><br>
@@ -926,6 +1106,17 @@
       </div>
     `).join('');
   }
+
+  window.openAnnouncementModal = function(ann) {
+    const priorityBadge = ann.Prioritas === 'Tinggi' ? '<span style="background:#fee2e2; color:#dc2626; padding:2px 8px; border-radius:12px; font-size:0.7rem; margin-left:8px;">PENTING</span>' : '';
+    openModal(
+      ann.Judul + priorityBadge,
+      ann.Isi || 'Tidak ada konten lengkap.',
+      'Pengumuman',
+      formatDate(ann.Tanggal),
+      ''
+    );
+  };
 
   // Struktur
   async function loadStruktur() {
@@ -946,7 +1137,7 @@
     `).join('');
   }
 
-  // Laporan Umum (diperbaiki)
+  // Laporan Umum
   let laporanData = [];
   async function loadLaporanUmum() {
     const container = document.getElementById('laporanUmumContainer');
@@ -1024,7 +1215,6 @@
     if(res.status === 'success' && res.data && res.data.length) {
       iplMaster = res.data;
     } else {
-      // Demo data
       iplMaster = [
         { Blok: 'A', Nomor: 'A1', NamaKepala: 'Budi Santoso', Bulan: 'Mei', Tahun: '2026', Status: 'Lunas', JumlahIPL: 350000, TanggalBayar: '2026-05-01' },
         { Blok: 'A', Nomor: 'A2', NamaKepala: 'Siti Aminah', Bulan: 'Mei', Tahun: '2026', Status: 'Belum', JumlahIPL: 350000, TanggalBayar: '' },
@@ -1034,7 +1224,6 @@
       ];
     }
     
-    // populate filters
     const blokSet = new Set(iplMaster.map(d => d.Blok).filter(Boolean));
     const blokSelect = document.getElementById('blokFilter');
     blokSelect.innerHTML = '<option value="">-- Semua Blok --</option>';
