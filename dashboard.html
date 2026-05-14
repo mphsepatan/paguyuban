@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Dashboard Pengurus — MPHS • Neubrutalism</title>
+  <title>Dashboard Pengurus — MPHS </title>
   <link href="https://fonts.googleapis.com/css2?family=Lexend+Exa:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -774,6 +774,7 @@
       <div class="page-tabs">
         <button class="page-tab active" onclick="switchTab('warga','wargaList',this)">📋 Data KK</button>
         <button class="page-tab" onclick="switchTab('warga','wargaUpload',this)">📤 Upload Massal</button>
+        <button class="page-tab" onclick="switchTab('warga','wargaExport',this)">📥 Export / Import</button>
       </div>
       <div class="tab-panel active" id="tab-wargaList">
         <div class="card">
@@ -808,6 +809,65 @@
           </div>
         </div>
       </div>
+
+      <!-- TAB EXPORT/IMPORT WARGA -->
+      <div class="tab-panel" id="tab-wargaExport">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex-wrap:wrap">
+
+          <!-- EXPORT WARGA -->
+          <div class="card" style="margin-bottom:0">
+            <div class="card-header"><h3>📥 Export Data Warga</h3></div>
+            <div style="padding:20px">
+              <p style="font-size:13px;font-weight:600;color:var(--gray);margin-bottom:16px">Download semua data warga dari memori lokal dashboard.</p>
+              <div class="form-group">
+                <label>Filter Blok</label>
+                <select id="exportWargaBlok">
+                  <option value="">Semua Blok</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Format Export</label>
+                <select id="exportWargaFormat">
+                  <option value="csv">CSV (Excel-friendly)</option>
+                  <option value="json">JSON (lengkap + anggota)</option>
+                </select>
+              </div>
+              <div style="display:flex;gap:10px;margin-top:8px">
+                <button class="btn btn-primary" onclick="exportWarga()">📥 Download Export</button>
+              </div>
+              <div style="margin-top:14px;background:var(--light-gray);border:var(--border-medium);padding:12px;border-radius:var(--radius-xs);font-size:12px;font-weight:600;color:var(--gray)">
+                ℹ️ CSV berisi: ID KK, Nama Kepala, Blok, No, HP, Email, Jumlah Anggota, Status<br>
+                ℹ️ JSON berisi seluruh data termasuk daftar anggota keluarga
+              </div>
+            </div>
+          </div>
+
+          <!-- IMPORT WARGA CSV -->
+          <div class="card" style="margin-bottom:0">
+            <div class="card-header"><h3>📤 Import Warga via CSV</h3></div>
+            <div style="padding:20px">
+              <p style="font-size:13px;font-weight:600;color:var(--gray);margin-bottom:16px">Upload file CSV untuk menambah/memperbarui data warga secara massal.</p>
+              <div class="upload-zone" onclick="document.getElementById('importWargaCSV').click()" style="padding:24px">
+                <div class="icon" style="font-size:28px">📄</div>
+                <h4 style="font-size:14px;margin-bottom:4px">Pilih file CSV</h4>
+                <p style="font-size:12px;color:var(--gray)">Kolom: id_kk, nama_kepala, alamat, blok, nomor, no_hp, email, status</p>
+                <input type="file" id="importWargaCSV" accept=".csv" style="display:none" onchange="handleImportWargaCSV(event)">
+              </div>
+              <div id="importWargaPreview" style="display:none;margin-top:14px">
+                <div style="font-weight:800;font-size:13px;margin-bottom:8px" id="importWargaInfo"></div>
+                <div style="max-height:180px;overflow-y:auto;border:var(--border-medium);border-radius:var(--radius-xs)" id="importWargaTable"></div>
+                <button class="btn btn-primary" style="margin-top:12px;width:100%" onclick="doImportWargaCSV()">📤 Upload ke Sheets</button>
+              </div>
+              <details style="margin-top:12px">
+                <summary style="cursor:pointer;font-size:12px;font-weight:800;color:var(--gray);padding:4px 0">📋 Format CSV yang diperlukan</summary>
+                <pre style="background:var(--light-gray);padding:10px;border-radius:var(--radius-xs);font-size:11px;overflow-x:auto;margin-top:6px;border:var(--border-medium)">id_kk,nama_kepala,alamat,blok,nomor,no_hp,email,status
+KK001,Budi Santoso,Jl. Mawar 5,A,5,08123456789,,Aktif</pre>
+              </details>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
 
     <!-- IPL -->
@@ -815,6 +875,7 @@
       <div class="page-tabs">
         <button class="page-tab active" onclick="switchTab('ipl','iplList',this)">📋 Tagihan IPL</button>
         <button class="page-tab" onclick="switchTab('ipl','iplGenerate',this)">⚡ Generate Tagihan</button>
+        <button class="page-tab" onclick="switchTab('ipl','iplExport',this)">📥 Export / Import</button>
       </div>
       <div class="tab-panel active" id="tab-iplList">
         <div class="card" style="margin-bottom:16px">
@@ -867,6 +928,82 @@
             </div>
             <button class="btn btn-gold" onclick="doGenerateIPL()">⚡ Generate Tagihan</button>
           </div>
+        </div>
+      </div>
+
+      <!-- TAB EXPORT/IMPORT IPL -->
+      <div class="tab-panel" id="tab-iplExport">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex-wrap:wrap">
+
+          <!-- EXPORT IPL -->
+          <div class="card" style="margin-bottom:0">
+            <div class="card-header"><h3>📥 Export Data IPL</h3></div>
+            <div style="padding:20px">
+              <p style="font-size:13px;font-weight:600;color:var(--gray);margin-bottom:16px">Download rekap tagihan IPL sesuai filter yang dipilih.</p>
+              <div class="form-group">
+                <label>Tahun</label>
+                <select id="exportIPLTahun">
+                  <option value="">Semua Tahun</option>
+                  <option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Bulan</label>
+                <select id="exportIPLBulan">
+                  <option value="">Semua Bulan</option>
+                  <option value="1">Januari</option><option value="2">Februari</option><option value="3">Maret</option>
+                  <option value="4">April</option><option value="5">Mei</option><option value="6">Juni</option>
+                  <option value="7">Juli</option><option value="8">Agustus</option><option value="9">September</option>
+                  <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select id="exportIPLStatus">
+                  <option value="">Semua Status</option>
+                  <option value="Lunas">Lunas</option>
+                  <option value="Belum Bayar">Belum Bayar</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Format Export</label>
+                <select id="exportIPLFormat">
+                  <option value="csv">CSV (Excel-friendly)</option>
+                  <option value="json">JSON</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="exportIPL()">📥 Download Export</button>
+              <div style="margin-top:14px;background:var(--light-gray);border:var(--border-medium);padding:12px;border-radius:var(--radius-xs);font-size:12px;font-weight:600;color:var(--gray)">
+                ℹ️ CSV berisi: Nama, Blok/No, Bulan, Tahun, Nominal, Status, Tgl Bayar, Keterangan
+              </div>
+            </div>
+          </div>
+
+          <!-- IMPORT IPL CSV -->
+          <div class="card" style="margin-bottom:0">
+            <div class="card-header"><h3>📤 Import IPL via CSV</h3></div>
+            <div style="padding:20px">
+              <p style="font-size:13px;font-weight:600;color:var(--gray);margin-bottom:16px">Upload CSV untuk mencatat banyak pembayaran sekaligus.</p>
+              <div class="upload-zone" onclick="document.getElementById('importIPLCSV').click()" style="padding:24px">
+                <div class="icon" style="font-size:28px">📄</div>
+                <h4 style="font-size:14px;margin-bottom:4px">Pilih file CSV</h4>
+                <p style="font-size:12px;color:var(--gray)">Kolom: id_kk, tahun, bulan, nominal, status, tanggal_bayar, keterangan</p>
+                <input type="file" id="importIPLCSV" accept=".csv" style="display:none" onchange="handleImportIPLCSV(event)">
+              </div>
+              <div id="importIPLPreview" style="display:none;margin-top:14px">
+                <div style="font-weight:800;font-size:13px;margin-bottom:8px" id="importIPLInfo"></div>
+                <div style="max-height:180px;overflow-y:auto;border:var(--border-medium);border-radius:var(--radius-xs)" id="importIPLTable"></div>
+                <button class="btn btn-primary" style="margin-top:12px;width:100%" onclick="doImportIPLCSV()">📤 Upload ke Sheets</button>
+              </div>
+              <details style="margin-top:12px">
+                <summary style="cursor:pointer;font-size:12px;font-weight:800;color:var(--gray);padding:4px 0">📋 Format CSV yang diperlukan</summary>
+                <pre style="background:var(--light-gray);padding:10px;border-radius:var(--radius-xs);font-size:11px;overflow-x:auto;margin-top:6px;border:var(--border-medium)">id_kk,tahun,bulan,nominal,status,tanggal_bayar,keterangan
+KK001,2025,1,50000,Lunas,2025-01-05,
+KK002,2025,1,50000,Belum Bayar,,</pre>
+              </details>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -1582,6 +1719,8 @@ function renderWarga() {
         <button class="btn btn-danger btn-sm" onclick="delItem('warga','${w.ID_KK}')">🗑️</button>
       </div></td>
     </tr>`).join(''):'<tr><td colspan="6" class="loading-row">Tidak ada data warga</td></tr>';
+  // Perbarui dropdown blok di panel export
+  initExportWargaBlok();
 }
 
 function handleWargaFile(e) {
@@ -1801,6 +1940,247 @@ function fmtDate(d) {
   try { return new Date(d).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}); }
   catch { return d; }
 }
+
+// ============================================================
+// EXPORT / IMPORT WARGA
+// ============================================================
+
+function initExportWargaBlok() {
+  const sel = document.getElementById('exportWargaBlok');
+  if (!sel) return;
+  const bloks = [...new Set(DB.warga.map(w => w.Blok).filter(Boolean))].sort();
+  sel.innerHTML = '<option value="">Semua Blok</option>' +
+    bloks.map(b => `<option value="${b}">Blok ${b}</option>`).join('');
+}
+
+function exportWarga() {
+  const blok   = document.getElementById('exportWargaBlok')?.value || '';
+  const format = document.getElementById('exportWargaFormat')?.value || 'csv';
+  let data = [...DB.warga];
+  if (blok) data = data.filter(w => w.Blok === blok);
+
+  if (!data.length) { showToast('Tidak ada data untuk di-export', 'error'); return; }
+
+  const ts = new Date().toISOString().slice(0,10);
+  const suffix = blok ? `_blok${blok}` : '_semua';
+
+  if (format === 'json') {
+    const blob = new Blob([JSON.stringify({ warga: data }, null, 2)], { type: 'application/json' });
+    downloadBlob(blob, `warga${suffix}_${ts}.json`);
+    showToast(`Export JSON berhasil (${data.length} KK)`, 'success');
+  } else {
+    const headers = ['ID_KK','NamaKepala','Alamat','Blok','Nomor','NoHP','Email','JumlahAnggota','Status'];
+    const rows = data.map(w => headers.map(h => escCSV(w[h] ?? '')));
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+    downloadBlob(blob, `warga${suffix}_${ts}.csv`);
+    showToast(`Export CSV berhasil (${data.length} KK)`, 'success');
+  }
+}
+
+function handleImportWargaCSV(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const rows = parseCSV(e.target.result);
+      if (!rows.length) { showToast('File CSV kosong', 'error'); return; }
+      window._importWargaData = rows;
+      document.getElementById('importWargaInfo').textContent =
+        `✅ ${rows.length} baris siap diimport`;
+      document.getElementById('importWargaTable').innerHTML = previewTable(rows.slice(0, 6), Object.keys(rows[0]));
+      document.getElementById('importWargaPreview').style.display = 'block';
+    } catch(err) { showToast('Gagal baca CSV: ' + err.message, 'error'); }
+  };
+  reader.readAsText(file, 'utf-8');
+  event.target.value = '';
+}
+
+async function doImportWargaCSV() {
+  const rows = window._importWargaData;
+  if (!rows || !rows.length) { showToast('Tidak ada data', 'error'); return; }
+
+  // Konversi header CSV ke format uploadWarga
+  const warga = rows.map(r => ({
+    id_kk:       r.id_kk || r.ID_KK || '',
+    nama_kepala: r.nama_kepala || r.NamaKepala || '',
+    alamat:      r.alamat || r.Alamat || '',
+    blok:        r.blok || r.Blok || '',
+    nomor:       r.nomor || r.Nomor || '',
+    no_hp:       r.no_hp || r.NoHP || '',
+    email:       r.email || r.Email || '',
+    status:      r.status || r.Status || 'Aktif',
+    anggota:     []
+  }));
+
+  showToast('Mengupload data warga...', 'success');
+  try {
+    const res = await callAPI({ action: 'uploadWarga', warga: JSON.stringify(warga) });
+    showToast(res.message || 'Import selesai', res.status === 'error' ? 'error' : 'success');
+    if (res.status !== 'error') {
+      const r = await callAPI({ action: 'getWarga' });
+      if (r.status === 'success') DB.warga = r.data;
+      renderWarga(); populateKKSelect();
+      document.getElementById('importWargaPreview').style.display = 'none';
+      window._importWargaData = null;
+    }
+  } catch(e) { showToast('Gagal: ' + e.message, 'error'); }
+}
+
+// ============================================================
+// EXPORT / IMPORT IPL
+// ============================================================
+
+function exportIPL() {
+  const tahun  = document.getElementById('exportIPLTahun')?.value || '';
+  const bulan  = document.getElementById('exportIPLBulan')?.value || '';
+  const status = document.getElementById('exportIPLStatus')?.value || '';
+  const format = document.getElementById('exportIPLFormat')?.value || 'csv';
+
+  let data = [...DB.ipl];
+  if (tahun)  data = data.filter(i => String(i.Tahun) === tahun);
+  if (bulan)  data = data.filter(i => String(i.Bulan) === bulan);
+  if (status) data = data.filter(i => i.Status === status);
+
+  if (!data.length) { showToast('Tidak ada data IPL untuk di-export', 'error'); return; }
+
+  const ts = new Date().toISOString().slice(0,10);
+  let nameParts = ['ipl'];
+  if (tahun) nameParts.push(tahun);
+  if (bulan) nameParts.push('bln'+bulan);
+  if (status) nameParts.push(status === 'Lunas' ? 'lunas' : 'belum');
+  const filename = nameParts.join('_') + '_' + ts;
+
+  if (format === 'json') {
+    const blob = new Blob([JSON.stringify({ ipl: data }, null, 2)], { type: 'application/json' });
+    downloadBlob(blob, filename + '.json');
+    showToast(`Export JSON IPL berhasil (${data.length} tagihan)`, 'success');
+  } else {
+    const headers = ['ID','ID_KK','NamaKepala','Blok','Nomor','Tahun','Bulan','Nominal','Status','TanggalBayar','Keterangan'];
+    const rows = data.map(i => headers.map(h => escCSV(i[h] ?? '')));
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+    downloadBlob(blob, filename + '.csv');
+    showToast(`Export CSV IPL berhasil (${data.length} tagihan)`, 'success');
+  }
+}
+
+function handleImportIPLCSV(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const rows = parseCSV(e.target.result);
+      if (!rows.length) { showToast('File CSV kosong', 'error'); return; }
+      window._importIPLData = rows;
+      document.getElementById('importIPLInfo').textContent =
+        `✅ ${rows.length} baris siap diimport`;
+      document.getElementById('importIPLTable').innerHTML = previewTable(rows.slice(0, 6), Object.keys(rows[0]));
+      document.getElementById('importIPLPreview').style.display = 'block';
+    } catch(err) { showToast('Gagal baca CSV: ' + err.message, 'error'); }
+  };
+  reader.readAsText(file, 'utf-8');
+  event.target.value = '';
+}
+
+async function doImportIPLCSV() {
+  const rows = window._importIPLData;
+  if (!rows || !rows.length) { showToast('Tidak ada data', 'error'); return; }
+
+  showToast(`Mengimport ${rows.length} tagihan IPL...`, 'success');
+  let ok = 0, fail = 0;
+
+  for (const r of rows) {
+    const idKK = r.id_kk || r.ID_KK || '';
+    if (!idKK) { fail++; continue; }
+
+    // Cari info warga dari DB lokal
+    const warga = DB.warga.find(w => w.ID_KK === idKK);
+    const payload = {
+      action:       'inputIPL',
+      id_kk:        idKK,
+      nama_kepala:  r.nama_kepala || warga?.NamaKepala || '',
+      blok:         r.blok || warga?.Blok || '',
+      nomor:        r.nomor || warga?.Nomor || '',
+      tahun:        r.tahun || r.Tahun || '',
+      bulan:        r.bulan || r.Bulan || '',
+      nominal:      r.nominal || r.Nominal || 0,
+      status:       r.status || r.Status || 'Belum Bayar',
+      tanggal_bayar:r.tanggal_bayar || r.TanggalBayar || '',
+      keterangan:   r.keterangan || r.Keterangan || ''
+    };
+    try {
+      const res = await callAPI(payload);
+      if (res.status === 'success') ok++;
+      else fail++;
+    } catch { fail++; }
+  }
+
+  showToast(`Import selesai: ${ok} berhasil, ${fail} gagal`, fail > 0 ? 'error' : 'success');
+  if (ok > 0) {
+    const r = await callAPI({ action: 'getIPL' });
+    if (r.status === 'success') DB.ipl = r.data;
+    renderIPL(); renderDashboard();
+    document.getElementById('importIPLPreview').style.display = 'none';
+    window._importIPLData = null;
+  }
+}
+
+// ============================================================
+// HELPER: CSV Parser, Preview Table, Download
+// ============================================================
+
+function parseCSV(text) {
+  // Hapus BOM jika ada
+  text = text.replace(/^\uFEFF/, '');
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  if (lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+  return lines.slice(1).map(line => {
+    // Handle quoted fields with commas inside
+    const values = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQ = !inQ; continue; }
+      if (ch === ',' && !inQ) { values.push(cur.trim()); cur = ''; continue; }
+      cur += ch;
+    }
+    values.push(cur.trim());
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = values[i] ?? '');
+    return obj;
+  }).filter(r => Object.values(r).some(v => v !== ''));
+}
+
+function escCSV(val) {
+  const s = String(val);
+  if (s.includes(',') || s.includes('"') || s.includes('\n')) {
+    return '"' + s.replace(/"/g, '""') + '"';
+  }
+  return s;
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function previewTable(rows, cols) {
+  if (!rows.length) return '<p style="padding:8px;font-size:12px">Tidak ada data</p>';
+  return `<table style="width:100%;border-collapse:collapse;font-size:11px">
+    <thead><tr>${cols.map(c=>`<th style="padding:6px 8px;background:#f0f0f0;border-bottom:2px solid #1a1a1a;font-weight:800;text-align:left;white-space:nowrap">${c}</th>`).join('')}</tr></thead>
+    <tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td style="padding:5px 8px;border-bottom:1px solid #eee;white-space:nowrap">${r[c]??''}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table>`;
+}
+
+// ============================================================
 
 function checkResp() {
   const btn=document.querySelector('.mobile-menu-btn');
